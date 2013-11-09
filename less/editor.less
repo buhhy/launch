@@ -26,6 +26,7 @@ html, body {
 
 		.survey-page {
 			overflow: hidden;
+			position: relative;
 
 			background-color: #fff;
 
@@ -55,13 +56,17 @@ html, body {
 	}
 
 	.element {
-		width: 10em;
-		height: 3em;
+		width: 150px;
+		height: 40px;
 
 		border: 1px dashed #666;
 
 		input {
 			width: 100%;
+
+			&[type="button"] {
+				height: 100%;
+			}
 		}
 	}
 }
