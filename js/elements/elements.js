@@ -1,6 +1,6 @@
 Launch.views.ElementView = Launch.views.View.extend({
-	"scope": Launch.globals.scope.standalone,
-	"parent": $("#elementCanvas"),
+	"scope": undefined,
+	"parent": undefined,
 	"model": undefined,
 	"elementMarkup": undefined,
 	"editMode": false,
@@ -12,11 +12,13 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 	"initialize": function (aOptions) {
 		this.model = new Launch.models.Element({
-			"objectType": aOptions.baseModel.objectType,
-			"css": aOptions.baseModel.defaultProperties
+			"objectType": aOptions.baseModel.get("objectType"),
+			"css": aOptions.baseModel.get("defaultProperties")
 		});
-		this.elementMarkup = aOptions.baseModel.elementMarkup;
+		this.elementMarkup = aOptions.baseModel.get("elementMarkup");
+		this.scope = aOptions.baseModel.get("scope");
 		this.editMode = aOptions.editMode;
+		this.parent = aOptions.parent;
 
 		this.buildElement();
 
@@ -59,12 +61,21 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"attachDragHandlers": function () {
-		this.$el.draggable({
+		var self = this;
+		self.$el.draggable({
 			"opacity": 0.8,
 			"helper": "original",
 			"appendTo": this.parent,
 			"scope": this.scope,
-			"cancel": false
+			"cancel": false,
+			"revert": function (aValid) {
+				if (!aValid) {
+					self.$el.fadeOut(200, function() {
+						$(this).detach();
+					});
+				}
+				return false;
+			}
 		});
 	},
 

@@ -9,7 +9,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"canvasView": undefined,
 	"model": undefined,
 	"targetParent": undefined,
-	"scope": Launch.globals.scope.standalone,
+	"scope": undefined,
 
 	"initialize": function (aOptions) {
 		this.canvasView = aOptions.canvasView;
@@ -28,11 +28,8 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 
 	"spawnChild": function () {
 		return new Launch.views.FormElementView({
-			"baseModel": {
-				"defaultProperties": this.model.get("defaultProperties"),
-				"elementMarkup": this.model.get("elementMarkup"),
-				"objectType": this.model.get("objectType")
-			},
+			"baseModel": this.model,
+			"parent": $("body"),
 			"editMode": true
 		})
 	},
@@ -42,7 +39,6 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		self.$el.mousedown(function (aEvent) {
 			var newEl = self.spawnChild();
 			newEl.moveToMouseCursor(aEvent);
-			newEl.attachTo($("body"));
 			newEl.$el.trigger(aEvent);
 			aEvent.preventDefault();
 		});
