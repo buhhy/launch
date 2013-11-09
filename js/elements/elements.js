@@ -51,13 +51,21 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.setCss("height");
 	},
 
-	"setCss": function(aKey) {
+	"setCss": function (aKey) {
 		var value = this.model.get("aKey");
 		if (value !== undefined) {
 			if (value === null)
 				value = "";
 			this.$el.css(aKey, value);
 		}
+	},
+
+	"reposition": function (aX, aY) {
+		this.model.set("left", aX);
+		this.model.set("top", aY);
+
+		this.setCss("left");
+		this.setCss("top");
 	},
 
 	"attachDragHandlers": function () {
@@ -68,6 +76,13 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"appendTo": this.parent,
 			"scope": this.scope,
 			"cancel": false,
+			"start": function (aEvent, aUi) {
+				aUi.helper.data("model", self);
+			},
+			"stop": function (aEvent, aUi) {
+				// clear in case of memory leak?
+				aUi.helper.data("model", undefined);
+			},
 			"revert": function (aValid) {
 				if (!aValid) {
 					self.$el.fadeOut(200, function() {

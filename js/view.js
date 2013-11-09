@@ -3,6 +3,10 @@ Launch.views.View = Backbone.View.extend({
 		$aEl.append(this.$el);
 	},
 
+	"detach": function() {
+		this.$el.detach();
+	},
+
 	"overrideDefaultClickHandlers": function () {
 		this.$el.find("input").click(function (aEvent) {
 			aEvent.preventDefault();

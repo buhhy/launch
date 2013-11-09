@@ -96,19 +96,20 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 			"accept": ".element",
 			"scope": Launch.globals.scope.standalone,
 			"drop": function (aEvent, aUi) {
-				var type = aUi.draggable.data("objectType");
+				// get position relative to active canvas
+				var thisPos = self.$el.offset();
+				var thatPos = $("body").offset();
+				var itemPos = aUi.position;
+				var newX =  itemPos.left - (thisPos.left - thatPos.left);
+				var newY = itemPos.top - (thisPos.top - thatPos.top);
 
-				// only proto objects have this object type property
-				if (type) {
-					var cloned = aUi.helper.clone();
-					cloned.css("opacity", 1.0);
-					self.$el.append(cloned);
-					self.elements.push(new Launch.views.ElementView({
-						"el": cloned,
-						"objectType": type,
-						"editMode": true
-					}));
-				}
+				var elemView = aUi.helper.data("model");
+				elemView.reposition(newX, newY);
+				elemView.detach();
+				self.attachNewElementView(elemView);
+
+				// clear in case of memory leak?
+				aUi.helper.data("model", undefined);
 			}
 		});
 	},
