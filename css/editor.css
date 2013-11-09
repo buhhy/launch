@@ -1,4 +1,4 @@
 html,body{width:100%;height:100%;font-size:12px;font-family:arial, helvetica;}
 .editor{width:100%;height:100%;padding-right:25em;box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}.editor .content-pane{overflow:auto;background-color:#ddd;width:100%;height:100%;}.editor .content-pane .survey-page{overflow:hidden;position:relative;background-color:#fff;width:60em;height:85em;margin:0 auto;}
 .editor .editor-bar{position:fixed;right:0;top:0;width:25em;height:100%;min-height:20em;}.editor .editor-bar .element-list{width:100%;height:60%;overflow:scroll;}.editor .editor-bar .element-list .element-sample .icon{width:50px;height:50px;}
-.editor .element{width:150px;height:40px;border:1px dashed #666;}.editor .element input{width:100%;}.editor .element input[type="button"]{height:100%;}
+.element{width:150px;height:40px;border:1px dashed #666;}.element input{width:100%;}.element input[type="button"]{height:100%;}

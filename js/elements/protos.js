@@ -5,11 +5,15 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		"<article><img class='icon' src='<%= icon %>'></article>",
 		"</li>"
 	].join(""),
+
+	"canvasView": undefined,
 	"model": undefined,
-	"targetParent": $("#elementCanvas"),
+	"targetParent": undefined,
 	"scope": Launch.globals.scope.standalone,
 
 	"initialize": function (aOptions) {
+		this.canvasView = aOptions.canvasView;
+		this.targetParent = this.canvasView.$el;
 		this.scope = this.model.get("scope");
 		this.buildElement();
 		this.attachClickHandler();
@@ -37,8 +41,9 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		var self = this;
 		self.$el.mousedown(function (aEvent) {
 			var newEl = self.spawnChild();
+			newEl.moveToMouseCursor(aEvent);
+			newEl.attachTo($("body"));
 			newEl.$el.trigger(aEvent);
-			newEl.attachTo(self.targetParent);
 			aEvent.preventDefault();
 		});
 	}
@@ -73,9 +78,14 @@ Launch.views.ElementPalette = Launch.views.View.extend({
 		Launch.views.TermsOfServiceProtoView
 	],
 
-	"initialize": function () {
+	"canvasView": undefined,
+
+	"initialize": function (aOptions) {
+		this.canvasView = aOptions.canvasView;
 		_.each(this.elements, function (aElement, aIndex, aList) {
-			var element = new aElement();
+			var element = new aElement({
+				"canvasView": this.canvasView
+			});
 			element.attachTo(this.$el);
 		}, this);
 	}
@@ -105,5 +115,10 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 				}
 			}
 		});
+	},
+
+	"attachNewElementView": function (aElementView) {
+		this.elements.push(aElementView);
+		aElementView.attachTo(this.$el);
 	}
 });

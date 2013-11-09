@@ -3,6 +3,12 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"parent": $("#elementCanvas"),
 	"model": undefined,
 	"elementMarkup": undefined,
+	"editMode": false,
+	"elementBoundsMarkup": "<div class='element'></div>",
+	"createEditableMouseOffset": {
+		"x": -15,
+		"y": -10
+	},
 
 	"initialize": function (aOptions) {
 		this.model = new Launch.models.Element({
@@ -10,10 +16,11 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"css": aOptions.baseModel.defaultProperties
 		});
 		this.elementMarkup = aOptions.baseModel.elementMarkup;
+		this.editMode = aOptions.editMode;
 
 		this.buildElement();
 
-		if (aOptions.editMode) {
+		if (this.editMode) {
 			this.overrideDefaultClickHandlers();
 			this.attachDragHandlers();
 			this.attachResizeHandlers();
@@ -30,7 +37,14 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"buildElement": function () {
-		this.setElement(this.elementMarkup);
+		if (this.editMode) {
+			var $base = $(this.elementBoundsMarkup);
+			$base.html(this.elementMarkup);
+			this.setElement($base);
+		} else {
+			this.setElement(this.elementBoundsMarkup);
+		}
+
 		this.setCss("width");
 		this.setCss("height");
 	},
@@ -58,6 +72,14 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.$el.resizable({
 			"handle": "all"
 		});
+	},
+
+	"moveToMouseCursor": function (aEvent) {
+		this.$el.css("position", "absolute");
+		this.$el.css("left",
+			aEvent.pageX + this.createEditableMouseOffset.x);
+		this.$el.css("top",
+			aEvent.pageY + this.createEditableMouseOffset.y);
 	}
 });
 
@@ -77,7 +99,7 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 			"accept": ".element",
 			"scope": "form",
 			"drop": function (aEvent, aUi) {
-				
+
 			}
 		});
 	}
