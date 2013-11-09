@@ -22,7 +22,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		this.$el.draggable({
 			"opacity": 0.8,
 			"helper": "clone",
-			"appendTo": this.parent,
+			"appendTo": this.targetParent,
 			"scope": this.scope,
 			"cancel": false
 		});
