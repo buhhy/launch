@@ -1,47 +1,3 @@
-Launch.views.View = Backbone.View.extend({
-	"canvas": "#elementCanvas",
-
-	"attachTo": function($aEl) {
-		$aEl.append(this.$el);
-	},
-
-	"overrideDefaultClickHandlers": function () {
-		this.$el.find("input").click(function (aEvent) {
-			aEvent.preventDefault();
-		});
-	}
-});
-
-Launch.views.ElementView = Launch.views.View.extend({
-	"model": undefined,
-
-	"initialize": function (aOptions) {
-		this.model = new Launch.models.Element({
-			"objectType": aOptions.objectType,
-			"css": {
-				"width": this.$el.css("width"),
-				"height": this.$el.css("height"),
-				"top": this.$el.css("top"),
-				"left": this.$el.css("left")
-			}
-		});
-
-		if (aOptions.editMode) {
-			this.overrideDefaultClickHandlers();
-			this.attachDragHandlers();
-		}
-	},
-
-	"attachDragHandlers": function () {
-		this.$el.draggable({
-			"opacity": 0.8,
-			"helper": "original",
-			"appendTo": this.canvas,
-			"cancel": false
-		});
-	},
-});
-
 Launch.views.ElementProtoView = Launch.views.View.extend({
 	"defaults": {
 		"objectType": null,
@@ -51,7 +7,12 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		"height": null
 	},
 
+	"model": undefined,
+	"targetParent": $("#elementCanvas"),
+	"scope": Launch.globals.scope.standalone,
+
 	"initialize": function (aOptions) {
+		this.model = aOptions.model;
 		aOptions = aOptions || {};
 		_.defaults(aOptions, this.defaults);
 		this.options = aOptions;
