@@ -1,11 +1,26 @@
 @import "mixins.less";
 
+@font-face {
+      font-family: "Born";
+      src: url("fonts/Born.otf");
+      font-weight: normal;
+      font-style: normal;
+   }
+
+@font-face {
+      font-family: "Gotham Rounded";
+      src: url("fonts/GOTHAMRND-BOOK.otf");
+      font-weight: normal;
+      font-style: normal;
+   }
+
 html, body {
 	width: 100%;
 	height: 100%;
 
-	font-size: 12px;
-	font-family: arial, helvetica;
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
 }
 
 .editor {
@@ -23,6 +38,40 @@ html, body {
 
 		width: 100%;
 		height: 100%;
+		display: table;
+
+		.navigation-pane {
+		width: 29em;
+		background-color: #f8f9f9;
+		height: 100%;
+		display: table-cell;
+		}
+
+			h1 {
+			font-family: 'Born';
+			font-size: 1.7em;
+			color: #00a88c;
+			-webkit-font-smoothing: antialiased;
+			padding: 27px 28px;
+			}			
+
+			h2 {
+			text-transform: uppercase;
+			font-family: 'Gotham Rounded';
+			color: #7a7a7a;
+			background-color: #e9e9e9;
+			padding: 17px 28px;
+			}
+				
+				ul {
+				font-family: 'Gotham Rounded';
+				color: #515151;
+				padding: 16px 28px;
+				}
+
+					li {
+					padding: 16px 0 16px 21px;
+					}
 
 		.survey-page {
 			overflow: hidden;
@@ -34,6 +83,8 @@ html, body {
 			height: 85em;
 
 			margin: 0 auto;
+
+			display: table-cell;
 		}
 	}
 
@@ -46,6 +97,7 @@ html, body {
 		height: 100%;
 
 		min-height: 20em;
+		background-color: gray;
 
 		.element-list {
 			width: 100%;
