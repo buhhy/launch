@@ -3,7 +3,6 @@
 @font-face {
       font-family: "Born";
       src: url("fonts/Born.otf");
-      font-weight: normal;
       font-style: normal;
    }
 
@@ -23,6 +22,14 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 }
 
+.topbar {
+	position: fixed;
+	max-height: 43px;
+	width: 100%;
+	padding: 0;
+	background-color: #515b61;
+	}
+
 .editor {
 	width: 100%;
 	height: 100%;
@@ -32,8 +39,6 @@ html, body {
 	.box-sizing();
 
 	.content-pane {
-		overflow: auto;
-
 		background-color: #ddd;
 
 		width: 100%;
@@ -45,6 +50,7 @@ html, body {
 		background-color: #f8f9f9;
 		height: 100%;
 		display: table-cell;
+		position: fixed;
 		}
 
 			h1 {
@@ -52,7 +58,7 @@ html, body {
 			font-size: 1.7em;
 			color: #00a88c;
 			-webkit-font-smoothing: antialiased;
-			padding: 27px 28px;
+			padding: 27px 28px 26px;
 			}			
 
 			h2 {
@@ -62,15 +68,23 @@ html, body {
 			background-color: #e9e9e9;
 			padding: 17px 28px;
 			}
-				
-				ul {
-				font-family: 'Gotham Rounded';
-				color: #515151;
-				padding: 16px 28px;
+				div {
+				height: 100%;
+				overflow: scroll;
 				}
+				
+					ul {
+					font-family: 'Gotham Rounded';
+					color: #515151;
+					padding: 16px 28px 0;
+					}
+
+					li:first-child {
+					padding: 16px 0 8 21px;
+					}
 
 					li {
-					padding: 16px 0 16px 21px;
+					padding: 8px 0 8px 21px;
 					}
 
 		.survey-page {
@@ -79,7 +93,7 @@ html, body {
 
 			background-color: #fff;
 
-			width: 60em;
+			width: 68.7em;
 			height: 85em;
 
 			margin: 0 auto;
