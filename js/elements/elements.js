@@ -2,6 +2,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"scope": Launch.globals.scope.standalone,
 	"parent": $("#elementCanvas"),
 	"model": undefined,
+	"elementMarkup": undefined,
 
 	"initialize": function (aOptions) {
 		this.model = new Launch.models.Element({
@@ -44,6 +45,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	"subviews": [],
+	"elementMarkup": "<input type='text' class='button' value='Button'>",
 
 	"initialize": function (aOptions) {
 		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
@@ -72,4 +74,20 @@ Launch.views.FormElementView = Launch.views.ElementView.extend({
 		this.parent = aOptions.parent;
 		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
 	}
+});
+
+Launch.views.ButtonProtoView = Launch.views.FormElementView.extend({
+	"elementMarkup": "<input type='button' class='button' value='Button'>"
+});
+
+Launch.views.TextboxProtoView = Launch.views.FormElementView.extend({
+	"elementMarkup": "<input type='text' class='textbox' value=''>"
+});
+
+Launch.views.RadioButtonProtoView = Launch.views.FormElementView.extend({
+	"elementMarkup": "<input type='radio' class='button' value='Button'>"
+});
+
+Launch.views.TermsOfServiceProtoView = Launch.views.FormElementView.extend({
+	"elementMarkup": "<div class='toc'><textarea></textarea></div>"
 });

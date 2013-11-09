@@ -1,13 +1,10 @@
 Launch.views.ElementProtoView = Launch.views.View.extend({
-	"defaults": {
-		"objectType": null,
-		"title": "",
-		"description": undefined,
-		"width": null,
-		"height": null
-	},
-
-	"elementMarkup": undefined,
+	"elementMarkUp":  [
+		"<li class='element-sample'>",
+		"<header><%= title %></header>",
+		"<article><img src='<%= icon =>'></article>",
+		"</li>"
+	].join(""),
 	"model": undefined,
 	"targetParent": $("#elementCanvas"),
 	"scope": Launch.globals.scope.standalone,
@@ -15,29 +12,20 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"initialize": function (aOptions) {
 		this.scope = this.model.get("scope");
 		this.buildElement();
-		this.attachDragHandlers();
-	},
-
-	"attachDragHandlers": function () {
-		this.$el.draggable({
-			"opacity": 0.8,
-			"helper": "clone",
-			"appendTo": this.targetParent,
-			"scope": this.scope,
-			"cancel": false
-		});
+		this.attachClickHandler();
 	},
 
 	"buildElement": function () {
-		this.setElement("<div class='element'></div>");
-		this.setCss("width");
-		this.setCss("height");
+		this.setElement(_.template(this.listElement, {
+			"title": element.model.get("title"),
+			"icon": element.model.get("icon")
+		}));
+	},
 
-		if (this.elementMarkup) {
-			this.$el.html(this.elementMarkup);
-			this.$el.data("objectType", this.model.get("objectType"));
-			this.overrideDefaultClickHandlers();
-		}
+	"attachClickHandler": function () {
+		this.$el.click(function (aEvent) {
+
+		});
 	},
 
 	"setCss": function(aKey) {
@@ -51,38 +39,26 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[0],
-	"elementMarkup": "<input type='button' class='button' value='Button'>"
+	"model": Launch.getDefaultElementProtos()[0]
 });
 
 Launch.views.ButtonProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[1],
-	"elementMarkup": "<input type='button' class='button' value='Button'>"
+	"model": Launch.getDefaultElementProtos()[1]
 });
 
 Launch.views.TextboxProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[2],
-	"elementMarkup": "<input type='button' class='button' value='Button'>"
+	"model": Launch.getDefaultElementProtos()[2]
 });
 
 Launch.views.RadioButtonProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[3],
-	"elementMarkup": "<input type='button' class='button' value='Button'>"
+	"model": Launch.getDefaultElementProtos()[3]
 });
 
 Launch.views.TermsOfServiceProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[4],
-	"elementMarkup": "<input type='button' class='button' value='Button'>"
+	"model": Launch.getDefaultElementProtos()[4]
 });
 
 Launch.views.ElementPalette = Launch.views.View.extend({
-	"listElement":  [
-		"<li class='element-sample'>",
-		"<header><%= title %></header>",
-		"<article></article>",
-		"</li>"
-	].join(""),
-
 	"elements": [
 		Launch.views.QuestionProtoView,
 		Launch.views.ButtonProtoView,
@@ -94,11 +70,7 @@ Launch.views.ElementPalette = Launch.views.View.extend({
 	"initialize": function () {
 		_.each(this.elements, function (aElement, aIndex, aList) {
 			var element = new aElement();
-			var $listEl = $(_.template(this.listElement, {
-				"title": element.model.get("title")
-			}));
-			element.attachTo($listEl.children("article"));
-			this.$el.append($listEl);
+			element.attachTo(this.$el);
 		}, this);
 	}
 });
