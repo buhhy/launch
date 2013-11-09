@@ -9,7 +9,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"canvasView": undefined,
 	"model": undefined,
 	"targetParent": undefined,
-	"scope": Launch.globals.scope.standalone,
+	"scope": undefined,
 
 	"initialize": function (aOptions) {
 		this.canvasView = aOptions.canvasView;
@@ -28,11 +28,8 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 
 	"spawnChild": function () {
 		return new Launch.views.FormElementView({
-			"baseModel": {
-				"defaultProperties": this.model.get("defaultProperties"),
-				"elementMarkup": this.model.get("elementMarkup"),
-				"objectType": this.model.get("objectType")
-			},
+			"baseModel": this.model,
+			"parent": $("body"),
 			"editMode": true
 		})
 	},
@@ -42,7 +39,6 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		self.$el.mousedown(function (aEvent) {
 			var newEl = self.spawnChild();
 			newEl.moveToMouseCursor(aEvent);
-			newEl.attachTo($("body"));
 			newEl.$el.trigger(aEvent);
 			aEvent.preventDefault();
 		});
@@ -100,19 +96,20 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 			"accept": ".element",
 			"scope": Launch.globals.scope.standalone,
 			"drop": function (aEvent, aUi) {
-				var type = aUi.draggable.data("objectType");
+				// get position relative to active canvas
+				var thisPos = self.$el.offset();
+				var thatPos = $("body").offset();
+				var itemPos = aUi.position;
+				var newX =  itemPos.left - (thisPos.left - thatPos.left);
+				var newY = itemPos.top - (thisPos.top - thatPos.top);
 
-				// only proto objects have this object type property
-				if (type) {
-					var cloned = aUi.helper.clone();
-					cloned.css("opacity", 1.0);
-					self.$el.append(cloned);
-					self.elements.push(new Launch.views.ElementView({
-						"el": cloned,
-						"objectType": type,
-						"editMode": true
-					}));
-				}
+				var elemView = aUi.helper.data("model");
+				elemView.reposition(newX, newY);
+				elemView.detach();
+				self.attachNewElementView(elemView);
+
+				// clear in case of memory leak?
+				aUi.helper.data("model", undefined);
 			}
 		});
 	},
