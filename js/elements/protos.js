@@ -2,7 +2,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"elementMarkUp":  [
 		"<li class='element-sample'>",
 		"<header><%= title %></header>",
-		"<article><img src='<%= icon =>'></article>",
+		"<article><img class='icon' src='<%= icon %>'></article>",
 		"</li>"
 	].join(""),
 	"model": undefined,
@@ -16,25 +16,31 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	},
 
 	"buildElement": function () {
-		this.setElement(_.template(this.listElement, {
-			"title": element.model.get("title"),
-			"icon": element.model.get("icon")
+		this.setElement(_.template(this.elementMarkUp, {
+			"title": this.model.get("title"),
+			"icon": this.model.get("icon")
 		}));
 	},
 
-	"attachClickHandler": function () {
-		this.$el.click(function (aEvent) {
-
-		});
+	"spawnChild": function () {
+		return new Launch.views.FormElementView({
+			"baseModel": {
+				"defaultProperties": this.model.get("defaultProperties"),
+				"elementMarkup": this.model.get("elementMarkup"),
+				"objectType": this.model.get("objectType")
+			},
+			"editMode": true
+		})
 	},
 
-	"setCss": function(aKey) {
-		var value = this.model.get("aKey");
-		if (value !== undefined) {
-			if (value === null)
-				value = "";
-			this.$el.css(aKey, value);
-		}
+	"attachClickHandler": function () {
+		var self = this;
+		self.$el.mousedown(function (aEvent) {
+			var newEl = self.spawnChild();
+			newEl.$el.trigger(aEvent);
+			newEl.attachTo(self.targetParent);
+			aEvent.preventDefault();
+		});
 	}
 });
 

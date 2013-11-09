@@ -5,6 +5,10 @@ Launch.models.Model = Backbone.Model.extend({
 Launch.models.ElementProto = Launch.models.Model.extend({
 	"defaults": {
 		"scope": Launch.globals.scope.standalone,
+		"defaultProperties": {
+			"width": "200",
+			"height": undefined
+		},
 		"objectType": undefined,
 		"title": undefined,
 		"description": undefined,

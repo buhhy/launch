@@ -6,9 +6,12 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 	"initialize": function (aOptions) {
 		this.model = new Launch.models.Element({
-			"objectType": aOptions.objectType,
-			"css": this.getCssFromEl()
+			"objectType": aOptions.baseModel.objectType,
+			"css": aOptions.baseModel.defaultProperties
 		});
+		this.elementMarkup = aOptions.baseModel.elementMarkup;
+
+		this.buildElement();
 
 		if (aOptions.editMode) {
 			this.overrideDefaultClickHandlers();
@@ -24,6 +27,21 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"top": this.$el.css("top"),
 			"left": this.$el.css("left")
 		};
+	},
+
+	"buildElement": function () {
+		this.setElement(this.elementMarkup);
+		this.setCss("width");
+		this.setCss("height");
+	},
+
+	"setCss": function(aKey) {
+		var value = this.model.get("aKey");
+		if (value !== undefined) {
+			if (value === null)
+				value = "";
+			this.$el.css(aKey, value);
+		}
 	},
 
 	"attachDragHandlers": function () {
@@ -45,7 +63,6 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	"subviews": [],
-	"elementMarkup": "<input type='text' class='button' value='Button'>",
 
 	"initialize": function (aOptions) {
 		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
@@ -74,20 +91,4 @@ Launch.views.FormElementView = Launch.views.ElementView.extend({
 		this.parent = aOptions.parent;
 		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
 	}
-});
-
-Launch.views.ButtonProtoView = Launch.views.FormElementView.extend({
-	"elementMarkup": "<input type='button' class='button' value='Button'>"
-});
-
-Launch.views.TextboxProtoView = Launch.views.FormElementView.extend({
-	"elementMarkup": "<input type='text' class='textbox' value=''>"
-});
-
-Launch.views.RadioButtonProtoView = Launch.views.FormElementView.extend({
-	"elementMarkup": "<input type='radio' class='button' value='Button'>"
-});
-
-Launch.views.TermsOfServiceProtoView = Launch.views.FormElementView.extend({
-	"elementMarkup": "<div class='toc'><textarea></textarea></div>"
 });
