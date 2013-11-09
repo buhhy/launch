@@ -2,39 +2,50 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"elementMarkUp":  [
 		"<li class='element-sample'>",
 		"<header><%= title %></header>",
-		"<article><img src='<%= icon =>'></article>",
+		"<article><img class='icon' src='<%= icon %>'></article>",
 		"</li>"
 	].join(""),
+
+	"canvasView": undefined,
 	"model": undefined,
-	"targetParent": $("#elementCanvas"),
+	"targetParent": undefined,
 	"scope": Launch.globals.scope.standalone,
 
 	"initialize": function (aOptions) {
+		this.canvasView = aOptions.canvasView;
+		this.targetParent = this.canvasView.$el;
 		this.scope = this.model.get("scope");
 		this.buildElement();
 		this.attachClickHandler();
 	},
 
 	"buildElement": function () {
-		this.setElement(_.template(this.listElement, {
-			"title": element.model.get("title"),
-			"icon": element.model.get("icon")
+		this.setElement(_.template(this.elementMarkUp, {
+			"title": this.model.get("title"),
+			"icon": this.model.get("icon")
 		}));
 	},
 
-	"attachClickHandler": function () {
-		this.$el.click(function (aEvent) {
-
-		});
+	"spawnChild": function () {
+		return new Launch.views.FormElementView({
+			"baseModel": {
+				"defaultProperties": this.model.get("defaultProperties"),
+				"elementMarkup": this.model.get("elementMarkup"),
+				"objectType": this.model.get("objectType")
+			},
+			"editMode": true
+		})
 	},
 
-	"setCss": function(aKey) {
-		var value = this.model.get("aKey");
-		if (value !== undefined) {
-			if (value === null)
-				value = "";
-			this.$el.css(aKey, value);
-		}
+	"attachClickHandler": function () {
+		var self = this;
+		self.$el.mousedown(function (aEvent) {
+			var newEl = self.spawnChild();
+			newEl.moveToMouseCursor(aEvent);
+			newEl.attachTo($("body"));
+			newEl.$el.trigger(aEvent);
+			aEvent.preventDefault();
+		});
 	}
 });
 
@@ -67,9 +78,14 @@ Launch.views.ElementPalette = Launch.views.View.extend({
 		Launch.views.TermsOfServiceProtoView
 	],
 
-	"initialize": function () {
+	"canvasView": undefined,
+
+	"initialize": function (aOptions) {
+		this.canvasView = aOptions.canvasView;
 		_.each(this.elements, function (aElement, aIndex, aList) {
-			var element = new aElement();
+			var element = new aElement({
+				"canvasView": this.canvasView
+			});
 			element.attachTo(this.$el);
 		}, this);
 	}
@@ -99,5 +115,10 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 				}
 			}
 		});
+	},
+
+	"attachNewElementView": function (aElementView) {
+		this.elements.push(aElementView);
+		aElementView.attachTo(this.$el);
 	}
 });
