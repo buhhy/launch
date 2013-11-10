@@ -124,6 +124,23 @@ Launch.getDefaultElementProtos = function () {
 					"agreePrompt": "I agree to the terms of use specified here."
 				},
 				"icon": "images/toc.png"
+			}),
+			new Launch.models.ElementProto({
+				"objectType": 6,
+				"elementType": [
+					Launch.globals.elementType.standalone
+				],
+				"elementMarkup": "<h1 data-widget='title'><%= title %></h1>",
+				"defaultCss": {
+					"width": "300",
+					"height": null,
+				},
+				"defaultProperties": {
+					"title": "Double-click this text to change text."
+				},
+				"title": "Text",
+				"description": "A text string",
+				"icon": "images/question.png"
 			})
 		];
 	}

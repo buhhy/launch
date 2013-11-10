@@ -76,3 +76,8 @@ Launch.views.TermsOfServiceProtoView = Launch.views.ElementProtoView.extend({
 	"model": Launch.getDefaultElementProtos()[4],
 	"viewClass": Launch.views.TermsOfUseElementView
 });
+
+Launch.views.TextProtoView = Launch.views.ElementProtoView.extend({
+	"model": Launch.getDefaultElementProtos()[5],
+	"viewClass": Launch.views.TextElementView
+});

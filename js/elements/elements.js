@@ -53,12 +53,13 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"buildElement": function () {
+		var templated = _.template(this.elementMarkup, this.model.get("properties"));
 		if (this.editMode) {
 			var $base = $(this.elementBoundsMarkup);
-			$base.html(this.elementMarkup);
+			$base.html(templated);
 			this.setElement($base);
 		} else {
-			this.setElement(this.elementBoundsMarkup);
+			this.setElement(templated);
 		}
 
 		this.applyCss("width");
@@ -346,24 +347,20 @@ Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
 	}
 });
 
-Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
+Launch.views.TextElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
-		var self = this;
-		var $view = {
-			"$rTextbox": self.$el.find("[data-widget='textbox']")
+		this.$viewElements = {
+			"$rTitle": this.$el.find("[data-widget='title']")
 		};
-		var props = this.model.get("properties");
-
-		$view.$rTextbox.prop("placeholder", props.placeholder);
-		self.$viewElements = $view;
 	},
 
 	"initializeEditable": function (aModel) {
-		this.attachEditablePopoverHandler(
-			this.$viewElements.$rTextbox,
-			{ "label": "Enter placeholder text:" },
-			function (aNewValue) {
+		this.attachEditableFieldHandler(
+			this.$viewElements.$rTitle, this.setTitle);
+	},
 
-			});
+	"setTitle": function (aTitle) {
+		this.setProperty("title", aTitle);
+		this.$viewElements.$rTitle.html(aTitle);
 	}
 });

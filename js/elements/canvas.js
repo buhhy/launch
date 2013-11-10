@@ -15,6 +15,7 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 
 Launch.views.ElementPalette = Launch.views.View.extend({
 	"elementClasses": [
+		Launch.views.TextProtoView,
 		Launch.views.QuestionProtoView,
 		Launch.views.ButtonProtoView,
 		Launch.views.TextboxProtoView,
