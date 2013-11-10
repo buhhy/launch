@@ -133,7 +133,7 @@ Launch.getDefaultElementProtos = function () {
 				"elementMarkup": "<h1 class='heading' data-widget='title'><%= title %></h1>",
 				"defaultCss": {
 					"width": 550,
-					"height": 170,
+					"height": 120,
 				},
 				"defaultProperties": {
 					"title": "Double-click to edit."

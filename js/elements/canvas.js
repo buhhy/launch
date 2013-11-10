@@ -65,6 +65,8 @@ Launch.views.Editor = Backbone.View.extend({
 			"el": "#elementPalette",
 			"canvasView": this.canvasView
 		});
+
+		this.firebase = new Firebase("https://etude.firebaseio.com/surveys");
 	},
 
 	"togglePreview": function (aEvent) {
@@ -85,6 +87,6 @@ Launch.views.Editor = Backbone.View.extend({
 	},
 
 	"save": function (aEvent) {
-		console.log(this.canvasView.fetchModelTree().toJSON());
+		console.log(JSON.stringify(this.canvasView.fetchModelTree().toJSON()));
 	}
 });

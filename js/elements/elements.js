@@ -1,5 +1,5 @@
 Launch.views.ElementView = Launch.views.View.extend({
-	"$viewElements": {},
+	"$viewElements": undefined,
 	"scope": undefined,
 	"model": undefined,
 	"elementMarkup": undefined,
@@ -24,12 +24,16 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"properties": $.extend(true, {}, aOptions.baseModel.get("defaultProperties")),
 		});
 
+		this.viewElements = {};
 		this.elementMarkup = aOptions.baseModel.get("elementMarkup");
 		this.elementType = aOptions.baseModel.get("elementType");
 		this.scope = aOptions.baseModel.get("scope");
 		this.editMode = aOptions.editMode;
-
 		this.tooltips = [];
+
+		if (this.editMode) {
+			this.setProperty("elementId", Launch.editor.getNextAvailableId());
+		}
 
 		this.buildElement();
 		this.preApplyModel();
@@ -197,10 +201,10 @@ Launch.views.ElementView = Launch.views.View.extend({
 				"render": function (aEvent, aApi) {
 					$("input[data-widget='editTextbox']").keyup(function (aEvent) {
 						// enter pressed
-						if (event.which == 13) {
+						if (aEvent.which == 13) {
 							aCallback.call(self, $(this).val());
 							aApi.hide();
-						} else if (event.which == 27) {
+						} else if (aEvent.which == 27) {
 							aApi.hide();
 						}
 					});
@@ -233,8 +237,6 @@ Launch.views.ElementView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
-	"questionId": undefined,
-
 	"acceptDragFn": function (aHelper) {
 		if (aHelper.hasClass("element")) {
 			var eType = aHelper.data("elementType");
@@ -259,7 +261,6 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 		this.attachEditableFieldHandler(
 			this.$viewElements.$qNumber, this.setNumber);
 		this.attachDropHandler();
-		this.questionId = Launch.editor.getNextAvailableId();
 	},
 
 	"setTitle": function (aTitle) {
@@ -273,14 +274,13 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	},
 
 	"onNewElementAdded": function (aElementView) {
-		aElementView.setQuestionId(this.questionId);
+		aElementView.setQuestionId(this.model.get("properties").elementId);
 	}
 });
 
 Launch.views.FormElementView = Launch.views.ElementView.extend({
 	"scope": Launch.globals.scope.form,
 	"questionId": undefined,
-	"formId": undefined,
 
 	// "initialize": function (aOptions) {
 	// 	Launch.views.ElementView.prototype.initialize.call(this, aOptions);
@@ -291,13 +291,13 @@ Launch.views.FormElementView = Launch.views.ElementView.extend({
 
 	"preApplyModel": function () {
 		if (this.editMode) {
-			this.formId = Launch.editor.getNextAvailableId();
-			this.setProperty("inputId", "formInput" + this.formId);
+			this.setProperty("inputId", "formInput" + this.model.get("properties").elementId);
 		}
 	},
 
 	"setQuestionId": function (aId) {
 		this.questionId = aId;
+		this.setProperty("questionId", this.questionId);
 		this.onSetQuestionId(aId);
 	},
 
@@ -367,7 +367,12 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 		$view.$rPrompt.prop("for", props.inputId);
 		$view.$rPrompt.html(props.agreePrompt);
 		self.$viewElements = $view;
-	}
+	},
+
+	"initializeEditable": function (aModel) {
+		this.questionId = Launch.editor.getNextAvailableId();
+		this.setProperty("questionId", this.questionId);
+	},
 });
 
 Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
