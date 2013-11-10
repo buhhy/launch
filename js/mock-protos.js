@@ -80,11 +80,11 @@ Launch.getDefaultElementProtos = function () {
 				"title": "Radio Button",
 				"description": "An exclusive button set",
 				"defaultCss": {
-					"width": 125,
-					"height": 125,
+					"width": 126,
+					"height": 178,
 				},
 				"defaultProperties": {
-					"iconUrl": "http://www.cash4macbooks.com/4/wp-content/plugins/ebay-sales-lister/img/iconPlaceholder_80x80.gif",
+					"iconUrl": "images/photos.png",
 					"optionTitle": "A radio button",
 					"inputId": "",
 					"radioGroupName": "",
