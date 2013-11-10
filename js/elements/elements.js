@@ -18,7 +18,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"initialize": function (aOptions) {
 		Launch.views.View.prototype.initialize.call(this, aOptions);
 
-		this.model = new this.modelClass({
+		this.model = aOptions.model || new this.modelClass({
 			"objectType": aOptions.baseModel.get("objectType"),
 			"css": $.extend(true, {}, aOptions.baseModel.get("defaultCss")),
 			"properties": $.extend(true, {}, aOptions.baseModel.get("defaultProperties")),
@@ -52,29 +52,28 @@ Launch.views.ElementView = Launch.views.View.extend({
 		});
 	},
 
-	"applyModel": function (aModel) { },
-
 	"preApplyModel": function () { },
 
 	"initializeEditable": function () { },
 
 	"buildElement": function () {
 		var templated = _.template(this.elementMarkup, this.model.get("properties"));
+		var $base = $(this.elementBoundsMarkup);
 
-		if (this.editMode) {
-			var $base = $(this.elementBoundsMarkup);
+		if (this.editMode &&
+				Launch.editor.getViewState() === Launch.editor.viewStates.preview)
+			$base.addClass("preview");
 
-			if (Launch.editor.getViewState() === Launch.editor.viewStates.preview)
-				$base.addClass("preview");
+		$base.html(templated);
+		this.setElement($base);
+	},
 
-			$base.html(templated);
-			this.setElement($base);
-		} else {
-			this.setElement(templated);
-		}
-
+	"applyModel": function (aModel) {
 		this.applyCss("width");
 		this.applyCss("height");
+		this.applyCss("top");
+		this.applyCss("left");
+		this.$el.css("position", "absolute");
 	},
 
 	"setCss": function (aKey, aValue) {
@@ -249,6 +248,7 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	},
 
 	"applyModel": function (aModel) {
+		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		this.$viewElements = {
 			"$qNumber": this.$el.find("[data-widget='questionNumber']"),
 			"$qTitle": this.$el.find("[data-widget='questionTitle']")
@@ -306,6 +306,7 @@ Launch.views.FormElementView = Launch.views.ElementView.extend({
 
 Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
+		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		var self = this;
 		var $view = {
 			"$rLabel": self.$el.find("[data-widget='radioLabel']"),
@@ -354,6 +355,7 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 
 Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
+		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		var self = this;
 		var $view = {
 			"$rText": self.$el.find("[data-widget='tosText']"),
@@ -377,6 +379,7 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 
 Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
+		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		this.$viewElements = {
 			"$rButton": this.$el.find("[data-widget='button']")
 		};
@@ -397,6 +400,7 @@ Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
 
 Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
+		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		this.$viewElements = {
 			"$rTextbox": this.$el.find("[data-widget='textbox']")
 		};
@@ -417,6 +421,7 @@ Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
 
 Launch.views.TextElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
+		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		this.$viewElements = {
 			"$rTitle": this.$el.find("[data-widget='title']")
 		};

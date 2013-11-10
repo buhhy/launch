@@ -1,0 +1,63 @@
+@import "mixins.less";
+
+@font-face {
+	font-family: "Born";
+	src: url("../fonts/Born.otf");
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Gotham Rounded";
+	src: url("../fonts/GOTHAMRND-BOOK.otf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	//background-color: #006395;
+	background-color: #fff;
+}
+
+body {
+	margin: 0 auto;
+	width: 1366px;
+	height: 100%;
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	display: table;
+}
+
+h1 {
+	font-family: 'Born';
+	color: #00a88c;
+	-webkit-font-smoothing: antialiased;
+	padding: 27px 0 26px 28px;
+}
+
+.survey {
+		.survey-page {
+			overflow: hidden;
+			position: relative;
+
+			background-color: #fff;
+
+			width: 786px;
+			height: 100%;
+		}
+}
+
+.element {
+	width: 150px;
+	height: 40px;
+
+	input {
+		width: 100%;
+
+		&[type="button"] {
+			height: 100%;
+		}
+	}
+}

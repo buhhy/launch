@@ -16,8 +16,7 @@ Launch.models.ElementProto = Launch.models.Model.extend({
 		"description": undefined,
 		"width": undefined,
 		"height": undefined,
-		"icon": undefined,
-		"children": undefined
+		"icon": undefined
 	}
 });
 
@@ -30,7 +29,14 @@ Launch.models.Element = Launch.models.Model.extend({
 			"top": undefined,
 			"left": undefined
 		},
-		"properties": {}
+		"properties": {},
+		"children": undefined
+	},
+	"initialize": function () {
+		Launch.models.Model.prototype.initialize.call(this);
+		var collection = new Launch.models.ElementCollection();
+		collection.reset(this.get("children"));
+		this.set("children", collection);
 	}
 });
 

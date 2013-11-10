@@ -10,11 +10,13 @@ Launch.views.View = Backbone.View.extend({
 	 * Detaches a view from its parent, and calls the parent's detach callback
 	 */
 	"detachFromView": function (aDestroy) {
-		if (this.parentView)
-			this.parentView.onChildDetached(this);
-		if (aDestroy)
-			this.onDestroy();
-		this.$el.detach();
+		if (this.$el.parent().length) {
+			if (this.parentView)
+				this.parentView.onChildDetached(this);
+			if (aDestroy)
+				this.onDestroy();
+			this.$el.detach();
+		}
 	},
 
 	/**

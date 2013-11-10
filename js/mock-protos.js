@@ -1,9 +1,13 @@
 Launch.defaultElementProtos = null;
+
+Launch.getElementProtoForObjectType = function (aType) {
+	return this.getDefaultElementProtos()[aType - 1];
+};
+
 Launch.getDefaultElementProtos = function () {
 	if (!this.defaultElementProtos) {
 		this.defaultElementProtos = [
 			new Launch.models.ElementProto({
-				"objectType": 1,
 				"elementType": [
 					Launch.globals.elementType.standalone,
 					Launch.globals.elementType.container
@@ -23,11 +27,11 @@ Launch.getDefaultElementProtos = function () {
 				},
 				"title": "Question",
 				"description": "A question string",
-				"icon": "images/question.png"
+				"icon": "images/question.png",
+				"viewClass": Launch.views.QuestionElementView
 			}),
 			new Launch.models.ElementProto({
 				"scope": Launch.globals.scope.standalone,
-				"objectType": 2,
 				"elementType": [
 					Launch.globals.elementType.form,
 					Launch.globals.elementType.standalone
@@ -42,11 +46,11 @@ Launch.getDefaultElementProtos = function () {
 				"defaultProperties": {
 					"label": "Continue"
 				},
-				"icon": "images/pushbutton.png"
+				"icon": "images/pushbutton.png",
+				"viewClass": Launch.views.ButtonElementView
 			}),
 			new Launch.models.ElementProto({
 				"scope": Launch.globals.scope.form,
-				"objectType": 3,
 				"elementType": [
 					Launch.globals.elementType.form
 				],
@@ -60,11 +64,11 @@ Launch.getDefaultElementProtos = function () {
 				"defaultProperties": {
 					"placeholder": "Placeholder text here:"
 				},
-				"icon": "images/textinput.png"
+				"icon": "images/textinput.png",
+				"viewClass": Launch.views.TextboxElementView
 			}),
 			new Launch.models.ElementProto({
 				"scope": Launch.globals.scope.form,
-				"objectType": 4,
 				"elementType": [
 					Launch.globals.elementType.form
 				],
@@ -90,10 +94,10 @@ Launch.getDefaultElementProtos = function () {
 					"radioGroupName": "",
 					"radioChecked": false
 				},
-				"icon": "images/radiobutton.png"
+				"icon": "images/radiobutton.png",
+				"viewClass": Launch.views.RadioButtonElementView
 			}),
 			new Launch.models.ElementProto({
-				"objectType": 5,
 				"elementType": [
 					Launch.globals.elementType.form,
 					Launch.globals.elementType.standalone
@@ -123,10 +127,10 @@ Launch.getDefaultElementProtos = function () {
 					].join("<br><br>"),
 					"agreePrompt": "I agree to the terms of use specified here."
 				},
-				"icon": "images/toc.png"
+				"icon": "images/toc.png",
+				"viewClass": Launch.views.TermsOfUseElementView
 			}),
 			new Launch.models.ElementProto({
-				"objectType": 6,
 				"elementType": [
 					Launch.globals.elementType.standalone
 				],
@@ -140,9 +144,13 @@ Launch.getDefaultElementProtos = function () {
 				},
 				"title": "Heading",
 				"description": "A heading",
-				"icon": "images/text.png"
+				"icon": "images/text.png",
+				"viewClass": Launch.views.TextElementView
 			})
 		];
+
+		for (var i = 0; i < this.defaultElementProtos.length; i++)
+			this.defaultElementProtos[i].objectType = i + 1;
 	}
 	return this.defaultElementProtos;
 };

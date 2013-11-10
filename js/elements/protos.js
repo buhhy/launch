@@ -6,7 +6,6 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		"</li>"
 	].join(""),
 
-	"viewClass": Launch.views.FormElementView,
 	"canvasView": undefined,
 	"model": undefined,
 	"targetParent": undefined,
@@ -36,7 +35,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	},
 
 	"spawnChild": function () {
-		return new this.viewClass({
+		return new (this.model.get("viewClass"))({
 			"baseModel": this.model,
 			"editMode": true
 		})
@@ -54,31 +53,25 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[0],
-	"viewClass": Launch.views.QuestionElementView
+	"model": Launch.getDefaultElementProtos()[0]
 });
 
 Launch.views.ButtonProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[1],
-	"viewClass": Launch.views.ButtonElementView
+	"model": Launch.getDefaultElementProtos()[1]
 });
 
 Launch.views.TextboxProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[2],
-	"viewClass": Launch.views.TextboxElementView
+	"model": Launch.getDefaultElementProtos()[2]
 });
 
 Launch.views.RadioButtonProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[3],
-	"viewClass": Launch.views.RadioButtonElementView
+	"model": Launch.getDefaultElementProtos()[3]
 });
 
 Launch.views.TermsOfServiceProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[4],
-	"viewClass": Launch.views.TermsOfUseElementView
+	"model": Launch.getDefaultElementProtos()[4]
 });
 
 Launch.views.TextProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[5],
-	"viewClass": Launch.views.TextElementView
+	"model": Launch.getDefaultElementProtos()[5]
 });
