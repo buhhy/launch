@@ -81,7 +81,7 @@ Launch.getDefaultElementProtos = function () {
 					"optionTitle": "A radio button",
 					"radioChecked": false
 				},
-				"icon": "icon": "images/radiobutton.png"
+				"icon": "images/radiobutton.png"
 			}),
 			new Launch.models.ElementProto({
 				"objectType": 5,
