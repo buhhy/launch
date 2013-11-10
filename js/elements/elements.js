@@ -289,6 +289,7 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 		}, this);
 
 		return $.extend(true, {
+			"objectType": this.model.get("objectType"),
 			"answers": responses
 		}, props);
 	}

@@ -10,9 +10,11 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 	},
 
 	"fetchResponseTree": function () {
-		return _.map(this.childViews, function (aElemView) {
+		return _.filter(_.map(this.childViews, function (aElemView) {
 			return aElemView.fetchResponseTree();
-		}, this);
+		}), function (aElemView) {
+			return aElemView !== undefined && aElemView !== null;
+		});
 	}
 });
 
@@ -26,16 +28,18 @@ Launch.views.Survey = Backbone.View.extend({
 			"el": "#elementCanvas"
 		});
 
-		this.firebase = new Firebase("https://etude.firebaseio.com/surveys/test");
+		this.firebase = new Firebase(Launch.globals.firebase.root);
 		this.loadData();
 	},
 
 	"loadData": function () {
 		var self = this;
+		var url = Launch.globals.firebase.root + "/" +
+				Launch.globals.firebase.template + ".json";
 
 		$.ajax({
 			"method": "get",
-			"url": "https://etude.firebaseio.com/surveys/test.json"
+			"url": url
 		}).success(function (aResults) {
 			var collection = new Launch.models.ElementCollection();
 			collection.reset(aResults);
@@ -62,6 +66,10 @@ Launch.views.Survey = Backbone.View.extend({
 
 	"submitSurvey": function (aEvent) {
 		aEvent.preventDefault();
-		console.log(this.canvasView.fetchResponseTree());
+		var db = this.firebase.child(Launch.globals.firebase.results);
+		var json = this.canvasView.fetchResponseTree();
+		db.push(json, function (aError) {
+			alert("Saved!");
+		});
 	}
 });

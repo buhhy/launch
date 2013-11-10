@@ -66,7 +66,7 @@ Launch.views.Editor = Backbone.View.extend({
 			"canvasView": this.canvasView
 		});
 
-		this.firebase = new Firebase("https://etude.firebaseio.com/surveys/test");
+		this.firebase = new Firebase(Launch.globals.firebase.root);
 	},
 
 	"togglePreview": function (aEvent) {
@@ -87,8 +87,10 @@ Launch.views.Editor = Backbone.View.extend({
 	},
 
 	"save": function (aEvent) {
+		aEvent.preventDefault();
 		var json = JSON.stringify(this.canvasView.fetchModelTree().toJSON());
-		this.firebase.set(JSON.parse(json), function () {
+		var db = this.firebase.child(Launch.globals.firebase.template);
+		db.set(JSON.parse(json), function () {
 			alert("saved!");
 		});
 	}
