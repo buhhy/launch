@@ -40,8 +40,8 @@ Launch.getDefaultElementProtos = function () {
 				"title": "Button",
 				"description": "A push button",
 				"defaultCss": {
-					"width": 98,
-					"height": 35,
+					"width": 110,
+					"height": 40,
 				},
 				"defaultProperties": {
 					"label": "Continue"
@@ -103,7 +103,7 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.standalone
 				],
 				"elementMarkup": [
-					"<div data-widget='tosContainer'>",
+					"<div class='tos-container' data-widget='tosContainer'>",
 						"<article class='frame' data-widget='tosText'></article>",
 						"<footer data-widget='agreement'>",
 							"<input class='checkbox' data-widget='agreeCheckbox' type='checkbox'>",
