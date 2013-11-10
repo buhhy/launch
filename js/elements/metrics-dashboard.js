@@ -2,11 +2,12 @@ Launch.views.DonutChart = Backbone.View.extend({
 	"initialize": function (aOptions) {
 		this.elementId = aOptions.elementId;
 		this.domId = "chart_" + aOptions.elementId;
+		this.$el.html("<h1>" + aOptions.object.question.title + "</h1>")
 
 		this.$el.prop("id", this.domId);
 
-		var width = 500;
-		var height = 500;
+		var width = 350;
+		var height = 350;
 		var radius = Math.min(width, height) / 2;
 
 		var color = d3.scale.ordinal().range([
@@ -21,7 +22,7 @@ Launch.views.DonutChart = Backbone.View.extend({
 
 		var arc = d3.svg.arc()
 				.outerRadius(radius - 10)
-				.innerRadius(radius - 70);
+				.innerRadius(radius - 40);
 
 		var pie = d3.layout.pie()
 				.value(function (aData) {
@@ -116,13 +117,14 @@ Launch.views.MetricsList = Launch.views.View.extend({
 		this.charts = {};
 	},
 
-	"getChart": function (aKey, aObjectType) {
+	"getChart": function (aKey, aValue) {
 		if (this.charts[aKey] === undefined) {
-			var cClass = this.objectTypeChartClass[aObjectType];
+			var cClass = this.objectTypeChartClass[aValue.objectType];
 			if (cClass) {
 				var $elem = $("<li></li>");
 				this.$el.append($elem);
 				this.charts[aKey] = new cClass({
+					"object": aValue,
 					"el": $elem,
 					"elementId": aKey
 				});
@@ -134,7 +136,7 @@ Launch.views.MetricsList = Launch.views.View.extend({
 
 	"updateData": function (aData) {
 		_.each(aData, function (aValue, aKey) {
-			var chart = this.getChart(aKey, aValue.objectType);
+			var chart = this.getChart(aKey, aValue);
 
 			if (chart !== undefined) {
 				chart.updateData(aValue);
