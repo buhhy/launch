@@ -207,6 +207,9 @@ Launch.views.ElementView = Launch.views.View.extend({
 							aApi.hide();
 						}
 					});
+				},
+				"visible": function (aEvent, aApi) {
+					$(this).find("input[data-widget='editTextbox']").focus();
 				}
 			}
 		});

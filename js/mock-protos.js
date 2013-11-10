@@ -54,7 +54,7 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.form
 				],
-				"elementMarkup": "<input type='text' data-widget='textbox' placeholder='<%= placeholder %>'>",
+				"elementMarkup": "<input class='textbox' type='text' data-widget='textbox' placeholder='<%= placeholder %>'>",
 				"title": "Textbox",
 				"description": "An input text box",
 				"defaultCss": {
@@ -74,7 +74,7 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<section class='center'>",
-						"<input type='radio' data-widget='radioButton' value='value'>",
+						"<input class='radio' type='radio' data-widget='radioButton' value='value'>",
 						"<label data-widget='radioLabel'>",
 							"<img class='img-option' data-widget='radioImage'>",
 							"<span='text' data-widget='radioTitle'></span>",
@@ -137,7 +137,7 @@ Launch.getDefaultElementProtos = function () {
 				"elementMarkup": "<h1 class='heading' data-widget='title'><%= title %></h1>",
 				"defaultCss": {
 					"width": 550,
-					"height": 120,
+					"height": 100,
 				},
 				"defaultProperties": {
 					"title": "Double-click to edit."
@@ -150,7 +150,7 @@ Launch.getDefaultElementProtos = function () {
 		];
 
 		for (var i = 0; i < this.defaultElementProtos.length; i++)
-			this.defaultElementProtos[i].objectType = i + 1;
+			this.defaultElementProtos[i].set("objectType", i + 1);
 	}
 	return this.defaultElementProtos;
 };
