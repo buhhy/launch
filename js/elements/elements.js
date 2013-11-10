@@ -198,7 +198,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			},
 			"events": {
 				"render": function (aEvent, aApi) {
-					$("input[data-widget='editTextbox']").keyup(function (aEvent) {
+					$(this).find("input[data-widget='editTextbox']").keyup(function (aEvent) {
 						// enter pressed
 						if (aEvent.which == 13) {
 							aCallback.call(self, $(this).val());
