@@ -70,7 +70,7 @@ Launch.views.Editor = Backbone.View.extend({
 	},
 
 	"togglePreview": function (aEvent) {
-		var $el = $(this);
+		var $el = $(aEvent.currentTarget);
 		var previewOn = !$el.prop("data-preview");
 
 		if (previewOn) {

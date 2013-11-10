@@ -18,7 +18,7 @@
 
 	max-width: 280px;
 	min-width: 50px;
-	
+
 	font-size: 10.5px;
 	line-height: 12px;
 
@@ -65,7 +65,7 @@
 			right: 4px; top: 50%;
 			margin-top: -9px;
 		}
-	
+
 		* html .qtip-titlebar .qtip-close{ top: 16px; } /* IE fix */
 
 		.qtip-titlebar .ui-icon,
@@ -105,9 +105,9 @@
 .qtip-default{
 	border-width: 1px;
 	border-style: solid;
-	border-color: #F1D031;
+	border-color: #00a88c;
 
-	background-color: #FFFFA3;
+	background-color: #00a88c;
 	color: #555;
 }
 
@@ -120,7 +120,7 @@
 		background: #F1F1F1;
 		color: #777;
 	}
-	
+
 	.qtip-default .qtip-titlebar .qtip-close{
 		border-color: #AAA;
 		color: #111;
@@ -243,9 +243,12 @@
 .qtip-rounded,
 .qtip-tipsy,
 .qtip-bootstrap{
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: box-shadow;
+	-moz-box-shadow: box-shadow;
 }
 
 .qtip-rounded .qtip-titlebar{
@@ -259,7 +262,7 @@
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	
+
 	-webkit-box-shadow: 0 0 3px #333;
 	-moz-box-shadow: 0 0 3px #333;
 	box-shadow: 0 0 3px #333;
@@ -279,11 +282,11 @@
 		background-color: #4A4A4A;
 		background-color: rgba(0,0,0,0);
 	}
-	
+
 	.qtip-youtube .qtip-content{
 		padding: .75em;
 		font: 12px arial,sans-serif;
-		
+
 		filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#4a4a4a,EndColorStr=#000000);
 		-ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#4a4a4a,EndColorStr=#000000);";
 	}
@@ -362,11 +365,11 @@
 		color: white;
 		border: 0 dashed transparent;
 	}
-	
+
 	.qtip-cluetip .qtip-icon{
 		border-color: #808064;
 	}
-	
+
 	.qtip-cluetip .qtip-titlebar .ui-state-hover{
 		border-color: #696952;
 		color: #696952;
@@ -396,7 +399,7 @@
 	.qtip-tipsy .qtip-content{
 		padding: 6px 10px;
 	}
-	
+
 	.qtip-tipsy .qtip-icon{
 		border-color: #222;
 		text-shadow: none;
@@ -567,7 +570,7 @@
 	margin: 0 auto;
 	overflow: hidden;
 	z-index: 10;
-	
+
 }
 
 	/* Opera bug #357 - Incorrect tip position
@@ -585,7 +588,7 @@
 		background: transparent;
 		border: 0 dashed transparent;
 	}
-	
+
 	.qtip .qtip-tip canvas{ top: 0; left: 0; }
 
 	.qtip .qtip-tip .qtip-vml{
