@@ -60,6 +60,8 @@ Launch.views.DonutChart = Backbone.View.extend({
 
 		var g = this.svg.selectAll("path").data(this.pie(mutatedData));
 
+		g.attr("d", this.arc);
+
 		var enter = g.enter();
 
 		enter.append("g")
@@ -68,7 +70,7 @@ Launch.views.DonutChart = Backbone.View.extend({
 				.attr("d", this.arc)
 				.style("fill", function (aData) {
 					return self.color(aData.data.color);
-				})
+				});
 		enter.append("text")
 				.attr("transform", function (d) {
 					return "translate(" + self.arc.centroid(d) + ")";
@@ -80,8 +82,6 @@ Launch.views.DonutChart = Backbone.View.extend({
 				});
 
 		g.exit().remove();
-
-		this.svg.selectAll("path").attr("d", this.arc);
 	}
 });
 
