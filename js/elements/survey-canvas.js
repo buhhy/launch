@@ -68,6 +68,17 @@ Launch.views.Survey = Backbone.View.extend({
 		aEvent.preventDefault();
 		var db = this.firebase.child(Launch.globals.firebase.results);
 		var json = this.canvasView.fetchResponseTree();
+
+		// for (var i = 0; i < json.length; i++) {
+		// 	var elem = json[i];
+		// 	if (elem.answers) {
+		// 		for (var j = 0; j < elem.answers; j++) {
+		// 			var adb = db.child(elem.elementId).child;
+		// 			var answer = elem.answers[j];
+		// 		}
+		// 	}
+		// }
+
 		db.push(json, function (aError) {
 			alert("Saved!");
 		});
