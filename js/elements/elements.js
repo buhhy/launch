@@ -205,17 +205,10 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	},
 
 	"applyModel": function (aModel) {
-		var self = this;
-		var $view = {
-			"$qNumber": self.$el.find("[data-widget='questionNumber']"),
-			"$qTitle": self.$el.find("[data-widget='questionTitle']")
+		this.$viewElements = {
+			"$qNumber": this.$el.find("[data-widget='questionNumber']"),
+			"$qTitle": this.$el.find("[data-widget='questionTitle']")
 		};
-		var props = this.model.get("properties");
-
-		$view.$qNumber.html(props.number);
-		$view.$qTitle.html(props.title);
-
-		self.$viewElements = $view;
 	},
 
 	"initializeEditable": function () {
