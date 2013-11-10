@@ -50,7 +50,7 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.form
 				],
-				"elementMarkup": "<input type='text' data-widget='textbox'>",
+				"elementMarkup": "<input type='text' data-widget='textbox' placeholder='<%= placeholder %>'>",
 				"title": "Textbox",
 				"description": "An input text box",
 				"defaultCss": {

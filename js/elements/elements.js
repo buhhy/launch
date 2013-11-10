@@ -163,7 +163,10 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"content": _.template(Launch.editor.simplePopoverTemplate, aParams),
 			"position": {
 				"my": "left center",
-				"at": "right center"
+				"at": "right center",
+				"adjust": {
+					"x": 7
+				}
 			},
 			"show": {
 				"event": "click",
@@ -175,6 +178,12 @@ Launch.views.ElementView = Launch.views.View.extend({
 				"event": "unfocus",
 				"effect": function (aOffset) {
 					$(this).fadeOut(200);
+				}
+			},
+			"style": {
+				"classes": "qtip-rounded",
+				"tip": {
+					"corner": true
 				}
 			}
 		});
@@ -337,6 +346,22 @@ Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
 			function (aNewValue) {
 
 			});
+	}
+});
+
+Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
+	"applyModel": function (aModel) {
+		this.$viewElements = {
+			"$rTextbox": this.$el.find("[data-widget='textbox']")
+		};
+	},
+
+	"initializeEditable": function (aModel) {
+	},
+
+	"setPlaceholder": function (aPlaceholder) {
+		this.setProperty("placeholder", aPlaceholder);
+		this.$viewElements.$rTextbox.prop("placeholder", aPlaceholder);
 	}
 });
 
