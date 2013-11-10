@@ -18,9 +18,9 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 	"initialize": function (aOptions) {
 		this.model = new this.modelClass({
-			"objectType": aOptions.baseModel.get("objectType"),
-			"css": aOptions.baseModel.get("defaultCss"),
-			"properties": aOptions.baseModel.get("defaultProperties"),
+			"objectType": $.extend(true, {}, aOptions.baseModel.get("objectType")),
+			"css": $.extend(true, {}, aOptions.baseModel.get("defaultCss")),
+			"properties": $.extend(true, {}, aOptions.baseModel.get("defaultProperties")),
 		});
 		this.elementMarkup = aOptions.baseModel.get("elementMarkup");
 		this.elementType = aOptions.baseModel.get("elementType");
