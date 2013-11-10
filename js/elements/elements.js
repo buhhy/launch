@@ -158,11 +158,24 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 	"attachEditablePopoverHandler": function ($aElem, aParams, aCallback) {
 		var self = this;
-		$aElem.aToolTip({
-			"fixed": true,
-			"clickIt": true,
-			"toolTipClass": "edit-tooltip",
-			"tipContent": _.template(Launch.editor.simplePopoverTemplate, aParams)
+		$aElem.qtip({
+			"content": _.template(Launch.editor.simplePopoverTemplate, aParams),
+			"position": {
+				"my": "left center",
+				"at": "right center"
+			},
+			"show": {
+				"event": "click",
+				"effect": function (aOffset) {
+					$(this).fadeIn(200);
+				}
+			},
+			"hide": {
+				"event": "unfocus",
+				"effect": function (aOffset) {
+					$(this).fadeOut(200);
+				}
+			}
 		});
 	},
 
@@ -321,6 +334,15 @@ Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
 
 		$view.$rButton.prop("value", props.label);
 		self.$viewElements = $view;
+	},
+
+	"initializeEditable": function (aModel) {
+		this.attachEditablePopoverHandler(
+			this.$viewElements.$rButton,
+			{ "label": "Enter placeholder text:" },
+			function (aNewValue) {
+
+			});
 	}
 });
 
