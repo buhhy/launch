@@ -1,5 +1,6 @@
 Launch.views.DonutChart = Backbone.View.extend({
 	"initialize": function (aOptions) {
+		this.elementId = aOptions.elementId;
 		this.domId = "chart_" + aOptions.elementId;
 
 		this.$el.prop("id", this.domId);
@@ -23,14 +24,64 @@ Launch.views.DonutChart = Backbone.View.extend({
 				.innerRadius(radius - 70);
 
 		var pie = d3.layout.pie()
-				.sort(null)
-				.value(function (d) { return d.selects; });
+				.value(function (aData) {
+					return aData.answers.length;
+				});
 
-		var svg = d3.select("#" + this.domId).append("svg")
+		var svg = d3.select("#" + this.domId)
+				.append("svg")
 				.attr("width", width)
 				.attr("height", height)
 				.append("g")
 				.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+		this.width = width;
+		this.height = height;
+		this.radius = radius;
+		this.color = color;
+		this.arc = arc;
+		this.pie = pie;
+		this.svg = svg;
+	},
+
+	"updateData": function (aData) {
+		var self = this;
+		var counter = 0;
+		var mutatedData = _.map(aData.options, function (aValue, aKey) {
+			return {
+				"id": aKey,
+				"answers": aValue,
+				"color": counter ++
+			};
+		});
+		console.log(mutatedData);
+
+		this.svg.data(mutatedData);
+
+		var g = this.svg.selectAll("path").data(this.pie(mutatedData));
+
+		var enter = g.enter();
+
+		enter.append("g")
+				.attr("class", "arc")
+				.append("path")
+				.attr("d", this.arc)
+				.style("fill", function (aData) {
+					return self.color(aData.data.color);
+				})
+		enter.append("text")
+				.attr("transform", function (d) {
+					return "translate(" + self.arc.centroid(d) + ")";
+				})
+				.attr("dy", ".35em")
+				.style("text-anchor", "middle")
+				.text(function (aData) {
+					return aData.data.answers[0].optionTitle;
+				});
+
+		g.exit().remove();
+
+		this.svg.selectAll("path").attr("d", this.arc);
 	}
 });
 
@@ -39,6 +90,10 @@ Launch.views.BarChart = Backbone.View.extend({
 		this.domId = "chart" + aOptions.elementId;
 
 		this.$el.prop("id", this.domId);
+	},
+
+	"updateData": function (aData) {
+
 	}
 });
 
@@ -82,8 +137,7 @@ Launch.views.MetricsList = Launch.views.View.extend({
 			var chart = this.getChart(aKey, aValue.objectType);
 
 			if (chart !== undefined) {
-				console.log(aKey);
-				console.log(aValue);
+				chart.updateData(aValue);
 			}
 		}, this);
 	},
