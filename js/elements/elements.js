@@ -1,10 +1,12 @@
 Launch.views.ElementView = Launch.views.View.extend({
+	"$viewElements": {},
 	"scope": undefined,
 	"parent": undefined,
 	"model": undefined,
 	"elementMarkup": undefined,
 	"elementType": undefined,
 	"editMode": false,
+	"modelClass": Launch.models.Element,
 	"elementBoundsMarkup": "<div class='element'></div>",
 	"createEditableMouseOffset": {
 		"x": -15,
@@ -12,9 +14,10 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"initialize": function (aOptions) {
-		this.model = new Launch.models.Element({
+		this.model = new this.modelClass({
 			"objectType": aOptions.baseModel.get("objectType"),
-			"css": aOptions.baseModel.get("defaultProperties")
+			"css": aOptions.baseModel.get("defaultCss"),
+			"properties": aOptions.baseModel.get("defaultProperties"),
 		});
 		this.elementMarkup = aOptions.baseModel.get("elementMarkup");
 		this.elementType = aOptions.baseModel.get("elementType");
@@ -23,6 +26,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.parent = aOptions.parent;
 
 		this.buildElement();
+		this.applyModel();
 
 		if (this.editMode) {
 			this.initializeEditable();
@@ -30,6 +34,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 			this.attachResizeHandlers();
 		}
 	},
+
+	"applyModel": function (aModel) { },
 
 	"initializeEditable": function () { },
 
@@ -70,12 +76,22 @@ Launch.views.ElementView = Launch.views.View.extend({
 		}
 	},
 
-	"reposition": function (aX, aY) {
-		this.setCss("left", aX);
-		this.setCss("top", aY);
+	"reposition": function (aLeft, aTop) {
+		console.log("repositioned: " + aLeft + ":" + aTop);
+		this.setCss("left", aLeft);
+		this.setCss("top", aTop);
 
 		this.applyCss("left");
 		this.applyCss("top");
+	},
+
+	"resize": function (aWidth, aHeight) {
+		console.log("resized: " + aWidth + ":" + aHeight);
+		this.setCss("width", aWidth);
+		this.setCss("height", aHeight);
+
+		this.applyCss("width");
+		this.applyCss("height");
 	},
 
 	"attachDragHandlers": function () {
@@ -85,7 +101,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"opacity": 0.8,
 			"helper": "original",
 			"appendTo": this.parent,
-			"cancel": "input",
+			"cancel": "input.editable,textarea",
 			"start": function (aEvent, aUi) {
 				aUi.helper.data("model", self);
 				aUi.helper.data("elementType", self.elementType);
@@ -106,8 +122,17 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"attachResizeHandlers": function () {
-		this.$el.resizable({
-			"handles": "all"
+		var self = this;
+		self.$el.resizable({
+			"handles": "all",
+			"stop": function (aEvent, aUi) {
+				if (aUi.originalPosition.left != aUi.position.left ||
+						aUi.originalPosition.top != aUi.position.top)
+					self.reposition(aUi.position.left, aUi.position.top);
+				if (aUi.originalSize.width != aUi.size.width ||
+						aUi.originalSize.height != aUi.size.height)
+					self.resize(aUi.size.width, aUi.size.height);
+			}
 		});
 	},
 
@@ -121,7 +146,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
-	"$viewElements": {},
+	"modelClass": Launch.models.QuestionElement,
 
 	"acceptDragFn": function (aHelper) {
 		if (aHelper.hasClass("element")) {
@@ -134,33 +159,52 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 		return false;
 	},
 
-	"initialize": function (aOptions) {
-		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
-		this.model = new Launch.models.QuestionElement({
-			"objectType": aOptions.objectType,
-			"css": this.getCssFromEl()
-		});
-		this.attachDropHandler(this.acceptHandler);
+	"applyModel": function (aModel) {
+		var self = this;
+		var $view = {
+			"$qNumber": self.$el.find(".question-number"),
+			"$qTitle": self.$el.find(".question-title")
+		};
+		self.$viewElements = $view;
 	},
 
 	"initializeEditable": function () {
-		this.$viewElements.$qNumber = this.$el.find(".question-number");
-		this.$viewElements.$qTitle = this.$el.find(".question-title");
+		var self = this;
+		self.attachDropHandler(self.acceptHandler);
 
-		this.$viewElements.$qTitle.editable({
+		self.$viewElements.$qTitle.editable({
 			"action": "dblclick"
-		}, function (newValue) {
-
+		}, function (aNewValue) {
+			if (aNewValue.old_value !== aNewValue.value)
+				self.setTitle(aNewValue.value);
 		});
+	},
+
+	"setTitle": function (aTitle) {
+		var props = this.model.get("properties");
+		props.title = aTitle;
+		this.model.set("properties", props);
+		this.$viewElements.$qTitle.text(aTitle);
 	}
 });
 
 Launch.views.FormElementView = Launch.views.ElementView.extend({
-	"scope": Launch.globals.scope.form,
-	"parent": undefined,
+	"scope": Launch.globals.scope.form
+});
 
-	"initialize": function (aOptions) {
-		this.parent = aOptions.parent;
-		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
+Launch.views.RadioButtonElementView = Launch.views.ElementView.extend({
+	"applyModel": function (aModel) {
+		var self = this;
+		var $view = {
+			"$rButton": self.$el.find(".radio-button"),
+			"$rImage": self.$el.find(".radio-image"),
+			"$rTitle": self.$el.find(".radio-title")
+		};
+		$view.$rButton;
+		self.$viewElements = $view;
+	},
+
+	"initializeEditable": function () {
+
 	}
 });

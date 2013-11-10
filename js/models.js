@@ -5,10 +5,11 @@ Launch.models.Model = Backbone.Model.extend({
 Launch.models.ElementProto = Launch.models.Model.extend({
 	"defaults": {
 		"scope": Launch.globals.scope.standalone,
-		"defaultProperties": {
+		"defaultCss": {
 			"width": "200",
 			"height": undefined
 		},
+		"defaultProperties": {},
 		"elementType": [],
 		"objectType": undefined,
 		"title": undefined,
@@ -27,7 +28,8 @@ Launch.models.Element = Launch.models.Model.extend({
 			"height": undefined,
 			"top": undefined,
 			"left": undefined
-		}
+		},
+		"properties": {}
 	}
 });
 
