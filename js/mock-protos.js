@@ -9,13 +9,17 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.container
 				],
 				"elementMarkup": [
-					"<h1 data-widget='questionNumber'>1</h1>",
+					"<h1 data-widget='questionNumber'></h1>",
 					"<span data-widget='divider'>|</span>",
 					"<h5 data-widget='questionTitle'>Double-click this text to enter your question.</h2>"
 				].join(""),
 				"defaultCss": {
 					"width": "600",
 					"height": "85",
+				},
+				"defaultProperties": {
+					"number": 1,
+					"title": "Ask a question!"
 				},
 				"title": "Question",
 				"description": "A question string",
