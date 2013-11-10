@@ -14,6 +14,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 		"y": -10
 	},
 
+	"tooltips": [],
+
 	"initialize": function (aOptions) {
 		this.model = new this.modelClass({
 			"objectType": aOptions.baseModel.get("objectType"),
@@ -26,6 +28,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.editMode = aOptions.editMode;
 		this.parent = aOptions.parent;
 
+		this.tooltips = [];
+
 		this.buildElement();
 		this.preApplyModel();
 		this.applyModel();
@@ -35,6 +39,12 @@ Launch.views.ElementView = Launch.views.View.extend({
 			this.attachDragHandler();
 			this.attachResizeHandler();
 		}
+	},
+
+	"onDestroy": function () {
+		_.each(this.tooltips, function (aElem) {
+			aElem.destroy();
+		});
 	},
 
 	"applyModel": function (aModel) { },
@@ -124,6 +134,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"revert": function (aValid) {
 				if (!aValid) {
 					self.$el.fadeOut(200, function() {
+						self.onDestroy();
 						$(this).detach();
 					});
 				}
@@ -185,8 +196,23 @@ Launch.views.ElementView = Launch.views.View.extend({
 				"tip": {
 					"corner": true
 				}
+			},
+			"events": {
+				"render": function (aEvent, aApi) {
+					$("input[data-widget='editTextbox']").keyup(function (aEvent) {
+						// enter pressed
+						if (event.which == 13) {
+							aCallback.call(self, $(this).val());
+							aApi.hide();
+						} else if (event.which == 27) {
+							aApi.hide();
+						}
+					});
+				}
 			}
 		});
+
+		self.tooltips.push($aElem.qtip("api"));
 	},
 
 	"moveToMouseCursor": function (aEvent) {
@@ -295,11 +321,21 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 	"initializeEditable": function () {
 		this.attachEditableFieldHandler(
 			this.$viewElements.$rTitle, this.setTitle);
+
+		this.attachEditablePopoverHandler(
+			this.$viewElements.$rImage,
+			{ "label": "Enter image url:" },
+			this.setImageUrl);
 	},
 
 	"setTitle": function (aTitle) {
 		this.setProperty("title", aTitle);
 		this.$viewElements.$rTitle.html(aTitle);
+	},
+
+	"setImageUrl": function (aUrl) {
+		this.setProperty("iconUrl", aUrl);
+		this.$viewElements.$rImage.prop("src", aUrl);
 	},
 
 	"onSetQuestionId": function (aId) {
@@ -329,23 +365,21 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 
 Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
-		var self = this;
-		var $view = {
-			"$rButton": self.$el.find("[data-widget='button']")
+		this.$viewElements = {
+			"$rButton": this.$el.find("[data-widget='button']")
 		};
-		var props = this.model.get("properties");
-
-		$view.$rButton.prop("value", props.label);
-		self.$viewElements = $view;
 	},
 
 	"initializeEditable": function (aModel) {
 		this.attachEditablePopoverHandler(
 			this.$viewElements.$rButton,
-			{ "label": "Enter placeholder text:" },
-			function (aNewValue) {
+			{ "label": "Enter button text:" },
+			this.setButtonLabel);
+	},
 
-			});
+	"setButtonLabel": function (aLabel) {
+		this.setProperty("label", aLabel);
+		this.$viewElements.$rButton.prop("value", aLabel);
 	}
 });
 
@@ -357,6 +391,10 @@ Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
 	},
 
 	"initializeEditable": function (aModel) {
+		this.attachEditablePopoverHandler(
+			this.$viewElements.$rTextbox,
+			{ "label": "Enter input placeholder text:" },
+			this.setPlaceholder);
 	},
 
 	"setPlaceholder": function (aPlaceholder) {

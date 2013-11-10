@@ -1,11 +1,11 @@
 Launch.views.View = Backbone.View.extend({
 	"elements": [],
 
-	"attachTo": function($aEl) {
+	"attachTo": function ($aEl) {
 		$aEl.append(this.$el);
 	},
 
-	"detach": function() {
+	"detach": function () {
 		this.$el.detach();
 	},
 
