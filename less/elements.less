@@ -19,7 +19,7 @@
 		padding: 0 10px;
 		color: #c9cc84;
 		position: relative;
-		bottom: 2px;
+		bottom: 3px;
 	}
 
 	.text {
@@ -41,4 +41,28 @@
 	-webkit-font-smoothing: antialiased;
 	border: none;
 	padding-top: 5.5px;
+}
+
+input[type='radio'] {
+	width:13px;
+	height:13px;
+	-webkit-appearance:none;
+	background-image: url('../images/radio_unchecked.png');
+
+	&:checked {
+	background-image: url('../images/radio_checked.png')
+	}
+
+}
+
+.img-option {
+	display: block;
+	margin: 0 18%
+}
+
+section .center {
+	text-align: center;
+	color: #515151;
+	font-size: 1em;
+	-webkit-font-smoothing: antialiased;
 }
