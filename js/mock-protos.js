@@ -10,8 +10,8 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<h1 data-widget='questionNumber'></h1>",
-					"<span data-widget='divider'>|</span>",
-					"<h5 data-widget='questionTitle'>Double-click this text to enter your question.</h2>"
+					"<span class='divider' data-widget='divider'>|</span>",
+					"<span class='text' data-widget='questionTitle'>Double-click this text to enter your question.</h2>"
 				].join(""),
 				"defaultCss": {
 					"width": "600",
@@ -32,15 +32,15 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.form,
 					Launch.globals.elementType.standalone
 				],
-				"elementMarkup": "<input type='button' data-widget='button'>",
+				"elementMarkup": "<input class='button' type='button' data-widget='button'>",
 				"title": "Button",
 				"description": "A push button",
 				"defaultCss": {
-					"width": 200,
-					"height": null,
+					"width": 98,
+					"height": 35,
 				},
 				"defaultProperties": {
-					"label": "Button"
+					"label": "Continue"
 				},
 				"icon": "images/pushbutton.png"
 			}),
