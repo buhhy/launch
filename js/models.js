@@ -16,7 +16,8 @@ Launch.models.ElementProto = Launch.models.Model.extend({
 		"description": undefined,
 		"width": undefined,
 		"height": undefined,
-		"icon": undefined
+		"icon": undefined,
+		"children": undefined
 	}
 });
 
@@ -35,10 +36,4 @@ Launch.models.Element = Launch.models.Model.extend({
 
 Launch.models.ElementCollection = Backbone.Collection.extend({
 	"model": Launch.models.Element
-});
-
-Launch.models.QuestionElement = Launch.models.Element.extend({
-	"defaults": _.extend({}, Launch.models.Element.defaults, {
-		"children": new Launch.models.ElementCollection()
-	})
 });

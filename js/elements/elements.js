@@ -19,7 +19,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 		Launch.views.View.prototype.initialize.call(this, aOptions);
 
 		this.model = new this.modelClass({
-			"objectType": $.extend(true, {}, aOptions.baseModel.get("objectType")),
+			"objectType": aOptions.baseModel.get("objectType"),
 			"css": $.extend(true, {}, aOptions.baseModel.get("defaultCss")),
 			"properties": $.extend(true, {}, aOptions.baseModel.get("defaultProperties")),
 		});
@@ -217,11 +217,22 @@ Launch.views.ElementView = Launch.views.View.extend({
 			aEvent.pageX + this.createEditableMouseOffset.x);
 		this.$el.css("top",
 			aEvent.pageY + this.createEditableMouseOffset.y);
+	},
+
+	"fetchModelTree": function () {
+		var collection = new Launch.models.ElementCollection();
+
+		_.each(this.childViews, function (aElemView) {
+			collection.add(aElemView.fetchModelTree());
+		});
+
+		this.model.set("children", collection);
+
+		return this.model;
 	}
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
-	"modelClass": Launch.models.QuestionElement,
 	"questionId": undefined,
 
 	"acceptDragFn": function (aHelper) {

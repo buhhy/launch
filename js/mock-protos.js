@@ -14,8 +14,8 @@ Launch.getDefaultElementProtos = function () {
 					"<span class='text' data-widget='questionTitle'><%= title %></h2>"
 				].join(""),
 				"defaultCss": {
-					"width": "600",
-					"height": "250",
+					"width": 600,
+					"height": 250,
 				},
 				"defaultProperties": {
 					"number": 1,
@@ -132,8 +132,8 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": "<h1 class='heading' data-widget='title'><%= title %></h1>",
 				"defaultCss": {
-					"width": "550",
-					"height": "170",
+					"width": 550,
+					"height": 170,
 				},
 				"defaultProperties": {
 					"title": "Double-click to edit."

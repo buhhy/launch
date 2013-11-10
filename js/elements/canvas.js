@@ -11,6 +11,16 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 	"initialize": function (aOptions) {
 		Launch.views.View.prototype.initialize.call(this, aOptions);
 		this.attachDropHandler(this.acceptHandler);
+	},
+
+	"fetchModelTree": function () {
+		var collection = new Launch.models.ElementCollection();
+
+		_.each(this.childViews, function (aElemView) {
+			collection.add(aElemView.fetchModelTree());
+		});
+
+		return collection;
 	}
 });
 
@@ -72,5 +82,9 @@ Launch.views.Editor = Backbone.View.extend({
 		}
 
 		$el.prop("data-preview", previewOn);
+	},
+
+	"save": function (aEvent) {
+		console.log(this.canvasView.fetchModelTree().toJSON());
 	}
 });

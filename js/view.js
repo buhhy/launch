@@ -1,9 +1,9 @@
 Launch.views.View = Backbone.View.extend({
-	"childElements": undefined,
+	"childViews": undefined,
 	"parentView": undefined,
 
 	"initialize": function (aOptions) {
-		this.childElements = [];
+		this.childViews = [];
 	},
 
 	/**
@@ -57,7 +57,7 @@ Launch.views.View = Backbone.View.extend({
 
 	"attachNewElementView": function (aElementView) {
 		aElementView.detachFromView();
-		this.childElements.push(aElementView);
+		this.childViews.push(aElementView);
 		aElementView.attachToView(this);
 		this.onNewElementAdded(aElementView);
 	},
@@ -67,9 +67,9 @@ Launch.views.View = Backbone.View.extend({
 	"onNewElementAdded": function (aElementView) { },
 
 	"onChildDetached": function (aChildView) {
-		for (var i = 0; i < this.childElements.length; i++) {
-			if (this.childElements[i] === aChildView) {
-				this.childElements.splice(i, 1);
+		for (var i = 0; i < this.childViews.length; i++) {
+			if (this.childViews[i] === aChildView) {
+				this.childViews.splice(i, 1);
 				console.log(i);
 				break;
 			}
