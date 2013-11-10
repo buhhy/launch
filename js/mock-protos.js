@@ -59,11 +59,11 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<section>",
-					"<input type='radio' class='radio-button' value='value'>",
-					"<label>",
-					"<img class='radio-image'>",
-					"<h1 class='radio-title'></h1>",
-					"</label>",
+						"<input type='radio' class='radio-button' value='value'>",
+						"<label class='radio-label'>",
+							"<img class='radio-image'>",
+							"<h1 class='radio-title'></h1>",
+						"</label>",
 					"</section>"
 				].join(""),
 				"editableMarkup": [
@@ -77,8 +77,10 @@ Launch.getDefaultElementProtos = function () {
 					"height": 100,
 				},
 				"defaultProperties": {
-					"iconUrl": "http://gkoonz.com/wp-content/uploads/2013/02/placeholder.jpg",
+					"iconUrl": "http://www.cash4macbooks.com/4/wp-content/plugins/ebay-sales-lister/img/iconPlaceholder_80x80.gif",
 					"optionTitle": "A radio button",
+					"inputId": "",
+					"radioGroupName": "",
 					"radioChecked": false
 				},
 				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
@@ -90,9 +92,12 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.standalone
 				],
 				"elementMarkup": [
-					"<div class='tos'>",
-					"<article></article>",
-					"<footer><input type='checkbox'><label></label></footer>",
+					"<div class='tos-container'>",
+						"<article class='tos-text'></article>",
+						"<footer class='tos-agreement'>",
+							"<input type='checkbox'>",
+							"<label class='tos-agreement-prompt'></label>",
+						"</footer>",
 					"</div>"
 				].join(""),
 				"title": "Terms of Service",
@@ -108,7 +113,8 @@ Launch.getDefaultElementProtos = function () {
 						"Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
 						"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
 						"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
-					].join("<br><br>")
+					].join("<br><br>"),
+					"agreePrompt": "I agree to the terms of use specified here."
 				},
 				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
 			})

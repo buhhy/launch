@@ -40,5 +40,8 @@ Launch.views.View = Backbone.View.extend({
 	"attachNewElementView": function (aElementView) {
 		this.elements.push(aElementView);
 		aElementView.attachTo(this.$el);
-	}
+		this.onNewElementAdded(aElementView);
+	},
+
+	"onNewElementAdded": function (aElementView) { }
 });

@@ -26,6 +26,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.parent = aOptions.parent;
 
 		this.buildElement();
+		this.preApplyModel();
 		this.applyModel();
 
 		if (this.editMode) {
@@ -36,6 +37,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"applyModel": function (aModel) { },
+
+	"preApplyModel": function () { },
 
 	"initializeEditable": function () { },
 
@@ -65,6 +68,12 @@ Launch.views.ElementView = Launch.views.View.extend({
 		var css = this.model.get("css");
 		css[aKey] = aValue;
 		this.model.set("css", css);
+	},
+
+	"setProperty": function (aKey, aValue) {
+		var properties = this.model.get("properties");
+		properties[aKey] = aValue;
+		this.model.set("properties", properties);
 	},
 
 	"applyCss": function (aKey) {
@@ -136,6 +145,16 @@ Launch.views.ElementView = Launch.views.View.extend({
 		});
 	},
 
+	"attachEditableFieldHandlers": function ($aElem, aCallback) {
+		var self = this;
+		$aElem.editable({
+			"action": "dblclick"
+		}, function (aNewValue) {
+			if (aNewValue.old_value !== aNewValue.value)
+				aCallback.call(self, aNewValue.value);
+		});
+	},
+
 	"moveToMouseCursor": function (aEvent) {
 		this.$el.css("position", "absolute");
 		this.$el.css("left",
@@ -147,6 +166,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	"modelClass": Launch.models.QuestionElement,
+	"questionId": undefined,
 
 	"acceptDragFn": function (aHelper) {
 		if (aHelper.hasClass("element")) {
@@ -169,30 +189,88 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	},
 
 	"initializeEditable": function () {
-		var self = this;
-		self.attachDropHandler(self.acceptHandler);
-
-		self.$viewElements.$qTitle.editable({
-			"action": "dblclick"
-		}, function (aNewValue) {
-			if (aNewValue.old_value !== aNewValue.value)
-				self.setTitle(aNewValue.value);
-		});
+		this.attachEditableFieldHandlers(
+			this.$viewElements.$qTitle, this.setTitle);
+		this.attachDropHandler();
+		this.questionId = Launch.editor.getNextAvailableId();
 	},
 
 	"setTitle": function (aTitle) {
-		var props = this.model.get("properties");
-		props.title = aTitle;
-		this.model.set("properties", props);
+		this.setProperty("title", aTitle);
 		this.$viewElements.$qTitle.text(aTitle);
+	},
+
+	"onNewElementAdded": function (aElementView) {
+		aElementView.setQuestionId(this.questionId);
 	}
 });
 
 Launch.views.FormElementView = Launch.views.ElementView.extend({
-	"scope": Launch.globals.scope.form
+	"scope": Launch.globals.scope.form,
+	"questionId": undefined,
+	"formId": undefined,
+
+	// "initialize": function (aOptions) {
+	// 	Launch.views.ElementView.prototype.initialize.call(this, aOptions);
+	// },
+
+	// "initializeEditable": function () {
+	// },
+
+	"preApplyModel": function () {
+		if (this.editMode) {
+			this.formId = Launch.editor.getNextAvailableId();
+			this.setProperty("inputId", "formInput" + this.formId);
+		}
+	},
+
+	"setQuestionId": function (aId) {
+		this.questionId = aId;
+		this.onSetQuestionId(aId);
+	},
+
+	"onSetQuestionId": function (aId) {}
 });
 
-Launch.views.RadioButtonElementView = Launch.views.ElementView.extend({
+Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
+	"applyModel": function (aModel) {
+		var self = this;
+		var $view = {
+			"$rLabel": self.$el.find(".radio-label"),
+			"$rButton": self.$el.find(".radio-button"),
+			"$rImage": self.$el.find(".radio-image"),
+			"$rTitle": self.$el.find(".radio-title")
+		};
+		var props = this.model.get("properties");
+
+		$view.$rButton.prop("checked", props.radioChecked);
+		$view.$rButton.prop("id", props.inputId);
+		$view.$rButton.prop("name", props.radioGroupName);
+		$view.$rLabel.prop("for", props.inputId);
+		$view.$rImage.prop("src", props.iconUrl);
+		$view.$rTitle.html(props.optionTitle);
+
+		self.$viewElements = $view;
+	},
+
+	"initializeEditable": function () {
+		this.attachEditableFieldHandlers(
+			this.$viewElements.$rTitle, this.setTitle);
+	},
+
+	"setTitle": function (aTitle) {
+		this.setProperty("title", aTitle);
+		this.$viewElements.$rTitle.html(aTitle);
+	},
+
+	"onSetQuestionId": function (aId) {
+		var groupName = "radioGroup" + aId;
+		this.setProperty("radioGroupName", groupName);
+		this.$viewElements.$rButton.prop("name", groupName);
+	}
+});
+
+Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
 		var self = this;
 		var $view = {
@@ -200,7 +278,11 @@ Launch.views.RadioButtonElementView = Launch.views.ElementView.extend({
 			"$rImage": self.$el.find(".radio-image"),
 			"$rTitle": self.$el.find(".radio-title")
 		};
-		$view.$rButton;
+		var props = this.model.get("properties");
+		$view.$rButton.prop("checked", props.radioChecked);
+		$view.$rButton.prop("name", props.radioGroupName);
+		$view.$rImage.prop("src", props.iconUrl);
+		$view.$rTitle.html(props.optionTitle);
 		self.$viewElements = $view;
 	},
 

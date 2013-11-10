@@ -8,3 +8,11 @@ $(function () {
 		"canvasView": canvasView
 	});
 });
+
+Launch.editor = {
+	"currentId": -1,
+	"getNextAvailableId": function () {
+		this.currentId ++;
+		return this.currentId;
+	}
+};
