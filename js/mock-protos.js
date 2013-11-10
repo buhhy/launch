@@ -19,7 +19,7 @@ Launch.getDefaultElementProtos = function () {
 				},
 				"defaultProperties": {
 					"number": 1,
-					"title": "Double-click this text to enter your question."
+					"title": "Double-click to enter your question."
 				},
 				"title": "Question",
 				"description": "A question string",

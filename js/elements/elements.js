@@ -1,7 +1,6 @@
 Launch.views.ElementView = Launch.views.View.extend({
 	"$viewElements": {},
 	"scope": undefined,
-	"parent": undefined,
 	"model": undefined,
 	"elementMarkup": undefined,
 	"elementMarkup": undefined,
@@ -17,6 +16,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"tooltips": [],
 
 	"initialize": function (aOptions) {
+		Launch.views.View.prototype.initialize.call(this, aOptions);
+
 		this.model = new this.modelClass({
 			"objectType": $.extend(true, {}, aOptions.baseModel.get("objectType")),
 			"css": $.extend(true, {}, aOptions.baseModel.get("defaultCss")),
@@ -26,7 +27,6 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.elementType = aOptions.baseModel.get("elementType");
 		this.scope = aOptions.baseModel.get("scope");
 		this.editMode = aOptions.editMode;
-		this.parent = aOptions.parent;
 
 		this.tooltips = [];
 
@@ -121,7 +121,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"delay": 100,
 			"opacity": 0.8,
 			"helper": "original",
-			"appendTo": this.parent,
+			"appendTo": $("body"),
 			"cancel": "input.editable,textarea",
 			"start": function (aEvent, aUi) {
 				aUi.helper.data("model", self);
@@ -134,8 +134,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"revert": function (aValid) {
 				if (!aValid) {
 					self.$el.fadeOut(200, function() {
-						self.onDestroy();
-						$(this).detach();
+						self.detachFromView(true);
 					});
 				}
 				return false;

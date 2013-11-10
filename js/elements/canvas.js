@@ -8,7 +8,8 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 		return false;
 	},
 
-	"initialize": function () {
+	"initialize": function (aOptions) {
+		Launch.views.View.prototype.initialize.call(this, aOptions);
 		this.attachDropHandler(this.acceptHandler);
 	}
 });
@@ -26,12 +27,14 @@ Launch.views.ElementPalette = Launch.views.View.extend({
 	"canvasView": undefined,
 
 	"initialize": function (aOptions) {
+		Launch.views.View.prototype.initialize.call(this, aOptions);
+
 		this.canvasView = aOptions.canvasView;
 		_.each(this.elementClasses, function (aElement, aIndex, aList) {
 			var element = new aElement({
 				"canvasView": this.canvasView
 			});
-			element.attachTo(this.$el);
+			element.attachToView(this);
 		}, this);
 	}
 });
