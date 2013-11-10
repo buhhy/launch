@@ -36,7 +36,7 @@ var Launch = {
 					},
 					"title": "Question",
 					"description": "A question string",
-					"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+					"icon": "images/question.png"
 				}),
 				new Launch.models.ElementProto({
 					"scope": Launch.globals.scope.form,
@@ -51,7 +51,7 @@ var Launch = {
 						"width": 200,
 						"height": null,
 					},
-					"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+					"icon": "images/pushbutton.png"
 				}),
 				new Launch.models.ElementProto({
 					"scope": Launch.globals.scope.form,
@@ -66,7 +66,7 @@ var Launch = {
 						"width": 200,
 						"height": null,
 					},
-					"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+					"icon": "images/textinput.png"
 				}),
 				new Launch.models.ElementProto({
 					"scope": Launch.globals.scope.form,
@@ -93,7 +93,7 @@ var Launch = {
 						"width": 100,
 						"height": 100,
 					},
-					"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+					"icon": "images/radiobutton.png"
 				}),
 				new Launch.models.ElementProto({
 					"objectType": 5,
@@ -113,7 +113,7 @@ var Launch = {
 						"width": 350,
 						"height": 300,
 					},
-					"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+					"icon": "images/toc.png"
 				})
 			];
 		}
