@@ -19,7 +19,7 @@ Launch.getDefaultElementProtos = function () {
 				},
 				"title": "Question",
 				"description": "A question string",
-				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+				"icon": "images/question.png"
 			}),
 			new Launch.models.ElementProto({
 				"scope": Launch.globals.scope.form,
@@ -34,7 +34,7 @@ Launch.getDefaultElementProtos = function () {
 					"width": 200,
 					"height": null,
 				},
-				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+				"icon": "images/pushbutton.png"
 			}),
 			new Launch.models.ElementProto({
 				"scope": Launch.globals.scope.form,
@@ -49,7 +49,7 @@ Launch.getDefaultElementProtos = function () {
 					"width": 200,
 					"height": null,
 				},
-				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+				"icon": "images/textinput.png"
 			}),
 			new Launch.models.ElementProto({
 				"scope": Launch.globals.scope.form,
@@ -83,7 +83,7 @@ Launch.getDefaultElementProtos = function () {
 					"radioGroupName": "",
 					"radioChecked": false
 				},
-				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+				"icon": "images/radiobutton.png"
 			}),
 			new Launch.models.ElementProto({
 				"objectType": 5,
@@ -116,7 +116,7 @@ Launch.getDefaultElementProtos = function () {
 					].join("<br><br>"),
 					"agreePrompt": "I agree to the terms of use specified here."
 				},
-				"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
+				"icon": "images/toc.png"
 			})
 		];
 	}
