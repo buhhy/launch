@@ -93,12 +93,18 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 	"initialize": function () {
 		var self = this;
 		self.$el.droppable({
-			"accept": ".element",
-			"scope": Launch.globals.scope.standalone,
+			"accept": function (aHelper) {
+				if (aHelper.hasClass("element")) {
+					var eType = aHelper.data("elementType");
+					if (eType.indexOf(Launch.globals.elementType.standalone) !== -1)
+						return true;
+				}
+				return false;
+			},
 			"drop": function (aEvent, aUi) {
 				// get position relative to active canvas
 				var thisPos = self.$el.offset();
-				var thatPos = $("body").offset();
+				var thatPos = aUi.helper.offsetParent().offset();
 				var itemPos = aUi.position;
 				var newX =  itemPos.left - (thisPos.left - thatPos.left);
 				var newY = itemPos.top - (thisPos.top - thatPos.top);

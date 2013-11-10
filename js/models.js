@@ -9,6 +9,7 @@ Launch.models.ElementProto = Launch.models.Model.extend({
 			"width": "200",
 			"height": undefined
 		},
+		"elementType": [],
 		"objectType": undefined,
 		"title": undefined,
 		"description": undefined,

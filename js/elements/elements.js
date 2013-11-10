@@ -3,6 +3,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"parent": undefined,
 	"model": undefined,
 	"elementMarkup": undefined,
+	"elementType": undefined,
 	"editMode": false,
 	"elementBoundsMarkup": "<div class='element'></div>",
 	"createEditableMouseOffset": {
@@ -16,6 +17,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"css": aOptions.baseModel.get("defaultProperties")
 		});
 		this.elementMarkup = aOptions.baseModel.get("elementMarkup");
+		this.elementType = aOptions.baseModel.get("elementType");
 		this.scope = aOptions.baseModel.get("scope");
 		this.editMode = aOptions.editMode;
 		this.parent = aOptions.parent;
@@ -74,10 +76,10 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"opacity": 0.8,
 			"helper": "original",
 			"appendTo": this.parent,
-			"scope": this.scope,
 			"cancel": false,
 			"start": function (aEvent, aUi) {
 				aUi.helper.data("model", self);
+				aUi.helper.data("elementType", self.elementType);
 			},
 			"stop": function (aEvent, aUi) {
 				// clear in case of memory leak?

@@ -3,6 +3,11 @@ var Launch = {
 		"scope": {
 			"standalone": "standalone",
 			"form": "form"
+		},
+		"elementType": {
+			"standalone": 1,
+			"container": 2,
+			"form": 3
 		}
 	},
 
@@ -16,6 +21,10 @@ var Launch = {
 			this.defaultElementProtos = [
 				new Launch.models.ElementProto({
 					"objectType": 1,
+					"elementType": [
+						Launch.globals.elementType.standalone,
+						Launch.globals.elementType.container
+					],
 					"elementMarkup": "<input type='text' class='button' value='Button'>",
 					"defaultProperties": {
 						"width": "100%",
@@ -28,6 +37,9 @@ var Launch = {
 				new Launch.models.ElementProto({
 					"scope": Launch.globals.scope.form,
 					"objectType": 2,
+					"elementType": [
+						Launch.globals.elementType.form
+					],
 					"elementMarkup": "<input type='button' class='button' value='Button'>",
 					"title": "Button",
 					"description": "A push button",
@@ -40,6 +52,9 @@ var Launch = {
 				new Launch.models.ElementProto({
 					"scope": Launch.globals.scope.form,
 					"objectType": 3,
+					"elementType": [
+						Launch.globals.elementType.form
+					],
 					"elementMarkup": "<input type='text' class='textbox' value=''>",
 					"title": "Textbox",
 					"description": "An input text box",
@@ -52,6 +67,9 @@ var Launch = {
 				new Launch.models.ElementProto({
 					"scope": Launch.globals.scope.form,
 					"objectType": 4,
+					"elementType": [
+						Launch.globals.elementType.form
+					],
 					"elementMarkup": "<input type='radio' class='button' value='Button'>",
 					"title": "Radio Button",
 					"description": "An exclusive button set",
@@ -63,6 +81,10 @@ var Launch = {
 				}),
 				new Launch.models.ElementProto({
 					"objectType": 5,
+					"elementType": [
+						Launch.globals.elementType.form,
+						Launch.globals.elementType.standalone
+					],
 					"elementMarkup": "<div class='toc'><textarea></textarea></div>",
 					"title": "Terms of Service",
 					"description": "A sample ToC to sign",
