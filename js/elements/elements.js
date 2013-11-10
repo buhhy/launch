@@ -185,19 +185,31 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 			"$qNumber": self.$el.find("[data-widget='questionNumber']"),
 			"$qTitle": self.$el.find("[data-widget='questionTitle']")
 		};
+		var props = this.model.get("properties");
+
+		$view.$qNumber.html(props.number);
+		$view.$qTitle.html(props.title);
+
 		self.$viewElements = $view;
 	},
 
 	"initializeEditable": function () {
 		this.attachEditableFieldHandlers(
 			this.$viewElements.$qTitle, this.setTitle);
+		this.attachEditableFieldHandlers(
+			this.$viewElements.$qNumber, this.setNumber);
 		this.attachDropHandler();
 		this.questionId = Launch.editor.getNextAvailableId();
 	},
 
 	"setTitle": function (aTitle) {
 		this.setProperty("title", aTitle);
-		this.$viewElements.$qTitle.text(aTitle);
+		this.$viewElements.$qTitle.html(aTitle);
+	},
+
+	"setNumber": function (aNumber) {
+		this.setProperty("number", aNumber);
+		this.$viewElements.$qNumber.html(aNumber);
 	},
 
 	"onNewElementAdded": function (aElementView) {
