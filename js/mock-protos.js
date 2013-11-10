@@ -15,7 +15,7 @@ Launch.getDefaultElementProtos = function () {
 				].join(""),
 				"defaultCss": {
 					"width": "600",
-					"height": "85",
+					"height": "250",
 				},
 				"defaultProperties": {
 					"number": 1,
@@ -69,19 +69,19 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.form
 				],
 				"elementMarkup": [
-					"<section>",
+					"<section class='center'>",
 						"<input type='radio' data-widget='radioButton' value='value'>",
 						"<label data-widget='radioLabel'>",
-							"<img data-widget='radioImage'>",
-							"<h1 data-widget='radioTitle'></h1>",
+							"<img class='img-option' data-widget='radioImage'>",
+							"<span='text' data-widget='radioTitle'></span>",
 						"</label>",
 					"</section>"
 				].join(""),
 				"title": "Radio Button",
 				"description": "An exclusive button set",
 				"defaultCss": {
-					"width": 100,
-					"height": 100,
+					"width": 125,
+					"height": 125,
 				},
 				"defaultProperties": {
 					"iconUrl": "http://www.cash4macbooks.com/4/wp-content/plugins/ebay-sales-lister/img/iconPlaceholder_80x80.gif",
