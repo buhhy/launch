@@ -10,6 +10,10 @@ $(function () {
 });
 
 Launch.editor = {
+	"simplePopoverTemplate": [
+		"<label><%= label %></label>",
+		"<input type='text' data-widget='editTextbox'>"
+	].join(""),
 	"currentId": -1,
 	"getNextAvailableId": function () {
 		this.currentId ++;

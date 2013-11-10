@@ -58,11 +58,13 @@ Launch.views.QuestionProtoView = Launch.views.ElementProtoView.extend({
 });
 
 Launch.views.ButtonProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[1]
+	"model": Launch.getDefaultElementProtos()[1],
+	"viewClass": Launch.views.ButtonElementView
 });
 
 Launch.views.TextboxProtoView = Launch.views.ElementProtoView.extend({
-	"model": Launch.getDefaultElementProtos()[2]
+	"model": Launch.getDefaultElementProtos()[2],
+	"viewClass": Launch.views.TextboxElementView
 });
 
 Launch.views.RadioButtonProtoView = Launch.views.ElementProtoView.extend({

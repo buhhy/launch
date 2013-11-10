@@ -26,17 +26,21 @@ Launch.getDefaultElementProtos = function () {
 				"icon": "images/question.png"
 			}),
 			new Launch.models.ElementProto({
-				"scope": Launch.globals.scope.form,
+				"scope": Launch.globals.scope.standalone,
 				"objectType": 2,
 				"elementType": [
-					Launch.globals.elementType.form
+					Launch.globals.elementType.form,
+					Launch.globals.elementType.standalone
 				],
-				"elementMarkup": "<input type='button' data-widget='button' value='Button'>",
+				"elementMarkup": "<input type='button' data-widget='button'>",
 				"title": "Button",
 				"description": "A push button",
 				"defaultCss": {
 					"width": 200,
 					"height": null,
+				},
+				"defaultProperties": {
+					"label": "Button"
 				},
 				"icon": "images/pushbutton.png"
 			}),
@@ -46,12 +50,15 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.form
 				],
-				"elementMarkup": "<input type='text' data-widget='textbox' value=''>",
+				"elementMarkup": "<input type='text' data-widget='textbox'>",
 				"title": "Textbox",
 				"description": "An input text box",
 				"defaultCss": {
 					"width": 200,
 					"height": null,
+				},
+				"defaultProperties": {
+					"placeholder": "Placeholder text here:"
 				},
 				"icon": "images/textinput.png"
 			}),
@@ -69,10 +76,6 @@ Launch.getDefaultElementProtos = function () {
 							"<h1 data-widget='radioTitle'></h1>",
 						"</label>",
 					"</section>"
-				].join(""),
-				"editableMarkup": [
-					"<label>Enter image URL:</label>",
-					"<input type='text' data-widget='editTextbox'>"
 				].join(""),
 				"title": "Radio Button",
 				"description": "An exclusive button set",

@@ -4,6 +4,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"parent": undefined,
 	"model": undefined,
 	"elementMarkup": undefined,
+	"elementMarkup": undefined,
 	"elementType": undefined,
 	"editMode": false,
 	"modelClass": Launch.models.Element,
@@ -31,8 +32,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 		if (this.editMode) {
 			this.initializeEditable();
-			this.attachDragHandlers();
-			this.attachResizeHandlers();
+			this.attachDragHandler();
+			this.attachResizeHandler();
 		}
 	},
 
@@ -103,7 +104,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.applyCss("height");
 	},
 
-	"attachDragHandlers": function () {
+	"attachDragHandler": function () {
 		var self = this;
 		self.$el.draggable({
 			"delay": 100,
@@ -130,7 +131,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 		});
 	},
 
-	"attachResizeHandlers": function () {
+	"attachResizeHandler": function () {
 		var self = this;
 		self.$el.resizable({
 			"handles": "all",
@@ -145,13 +146,23 @@ Launch.views.ElementView = Launch.views.View.extend({
 		});
 	},
 
-	"attachEditableFieldHandlers": function ($aElem, aCallback) {
+	"attachEditableFieldHandler": function ($aElem, aCallback) {
 		var self = this;
 		$aElem.editable({
 			"action": "dblclick"
 		}, function (aNewValue) {
 			if (aNewValue.old_value !== aNewValue.value)
 				aCallback.call(self, aNewValue.value);
+		});
+	},
+
+	"attachEditablePopoverHandler": function ($aElem, aParams, aCallback) {
+		var self = this;
+		$aElem.aToolTip({
+			"fixed": true,
+			"clickIt": true,
+			"toolTipClass": "edit-tooltip",
+			"tipContent": _.template(Launch.editor.simplePopoverTemplate, aParams)
 		});
 	},
 
@@ -194,9 +205,9 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	},
 
 	"initializeEditable": function () {
-		this.attachEditableFieldHandlers(
+		this.attachEditableFieldHandler(
 			this.$viewElements.$qTitle, this.setTitle);
-		this.attachEditableFieldHandlers(
+		this.attachEditableFieldHandler(
 			this.$viewElements.$qNumber, this.setNumber);
 		this.attachDropHandler();
 		this.questionId = Launch.editor.getNextAvailableId();
@@ -266,7 +277,7 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 	},
 
 	"initializeEditable": function () {
-		this.attachEditableFieldHandlers(
+		this.attachEditableFieldHandler(
 			this.$viewElements.$rTitle, this.setTitle);
 	},
 
@@ -291,14 +302,46 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 			"$rPrompt": self.$el.find("[data-widget='agreePrompt']")
 		};
 		var props = this.model.get("properties");
+
 		$view.$rText.html(props.tosText);
 		$view.$rCheckbox.prop("id", props.inputId);
 		$view.$rPrompt.prop("for", props.inputId);
 		$view.$rPrompt.html(props.agreePrompt);
 		self.$viewElements = $view;
+	}
+});
+
+Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
+	"applyModel": function (aModel) {
+		var self = this;
+		var $view = {
+			"$rButton": self.$el.find("[data-widget='button']")
+		};
+		var props = this.model.get("properties");
+
+		$view.$rButton.prop("value", props.label);
+		self.$viewElements = $view;
+	}
+});
+
+Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
+	"applyModel": function (aModel) {
+		var self = this;
+		var $view = {
+			"$rTextbox": self.$el.find("[data-widget='textbox']")
+		};
+		var props = this.model.get("properties");
+
+		$view.$rTextbox.prop("placeholder", props.placeholder);
+		self.$viewElements = $view;
 	},
 
-	"initializeEditable": function () {
+	"initializeEditable": function (aModel) {
+		this.attachEditablePopoverHandler(
+			this.$viewElements.$rTextbox,
+			{ "label": "Enter placeholder text:" },
+			function (aNewValue) {
 
+			});
 	}
 });
