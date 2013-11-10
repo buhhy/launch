@@ -182,8 +182,8 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 	"applyModel": function (aModel) {
 		var self = this;
 		var $view = {
-			"$qNumber": self.$el.find(".question-number"),
-			"$qTitle": self.$el.find(".question-title")
+			"$qNumber": self.$el.find("[data-widget='questionNumber']"),
+			"$qTitle": self.$el.find("[data-widget='questionTitle']")
 		};
 		self.$viewElements = $view;
 	},
@@ -236,10 +236,10 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
 		var self = this;
 		var $view = {
-			"$rLabel": self.$el.find(".radio-label"),
-			"$rButton": self.$el.find(".radio-button"),
-			"$rImage": self.$el.find(".radio-image"),
-			"$rTitle": self.$el.find(".radio-title")
+			"$rLabel": self.$el.find("[data-widget='radioLabel']"),
+			"$rButton": self.$el.find("[data-widget='radioButton']"),
+			"$rImage": self.$el.find("[data-widget='radioImage']"),
+			"$rTitle": self.$el.find("[data-widget='radioTitle']")
 		};
 		var props = this.model.get("properties");
 
@@ -274,15 +274,15 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
 		var self = this;
 		var $view = {
-			"$rButton": self.$el.find("[data-widget='tosText']"),
-			"$rImage": self.$el.find(".radio-image"),
-			"$rTitle": self.$el.find(".radio-title")
+			"$rText": self.$el.find("[data-widget='tosText']"),
+			"$rCheckbox": self.$el.find("[data-widget='agreeCheckbox']"),
+			"$rPrompt": self.$el.find("[data-widget='agreePrompt']")
 		};
 		var props = this.model.get("properties");
-		$view.$rButton.prop("checked", props.radioChecked);
-		$view.$rButton.prop("name", props.radioGroupName);
-		$view.$rImage.prop("src", props.iconUrl);
-		$view.$rTitle.html(props.optionTitle);
+		$view.$rText.html(props.tosText);
+		$view.$rCheckbox.prop("id", props.inputId);
+		$view.$rPrompt.prop("for", props.inputId);
+		$view.$rPrompt.html(props.agreePrompt);
 		self.$viewElements = $view;
 	},
 
