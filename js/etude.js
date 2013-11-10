@@ -27,7 +27,7 @@ var Launch = {
 					],
 					"elementMarkup": "<input type='text' class='button' value='Button'>",
 					"defaultProperties": {
-						"width": "100%",
+						"width": "300",
 						"height": null,
 					},
 					"title": "Question",

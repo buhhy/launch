@@ -49,12 +49,18 @@ Launch.views.ElementView = Launch.views.View.extend({
 			this.setElement(this.elementBoundsMarkup);
 		}
 
-		this.setCss("width");
-		this.setCss("height");
+		this.applyCss("width");
+		this.applyCss("height");
 	},
 
-	"setCss": function (aKey) {
-		var value = this.model.get("aKey");
+	"setCss": function (aKey, aValue) {
+		var css = this.model.get("css");
+		css[aKey] = aValue;
+		this.model.set("css", css);
+	},
+
+	"applyCss": function (aKey) {
+		var value = this.model.get("css")[aKey];
 		if (value !== undefined) {
 			if (value === null)
 				value = "";
@@ -63,11 +69,11 @@ Launch.views.ElementView = Launch.views.View.extend({
 	},
 
 	"reposition": function (aX, aY) {
-		this.model.set("left", aX);
-		this.model.set("top", aY);
+		this.setCss("left", aX);
+		this.setCss("top", aY);
 
-		this.setCss("left");
-		this.setCss("top");
+		this.applyCss("left");
+		this.applyCss("top");
 	},
 
 	"attachDragHandlers": function () {
@@ -98,7 +104,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 	"attachResizeHandlers": function () {
 		this.$el.resizable({
-			"handle": "all"
+			"handles": "all"
 		});
 	},
 
@@ -112,7 +118,16 @@ Launch.views.ElementView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
-	"subviews": [],
+	"acceptHandler": function (aHelper) {
+		if (aHelper.hasClass("element")) {
+			var eType = aHelper.data("elementType");
+			if (eType.indexOf(Launch.globals.elementType.standalone) === -1 &&
+					eType.indexOf(Launch.globals.elementType.form) !== -1)
+
+				return true;
+		}
+		return false;
+	},
 
 	"initialize": function (aOptions) {
 		Launch.views.ElementView.prototype.initialize.call(this, aOptions);
@@ -120,16 +135,7 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 			"objectType": aOptions.objectType,
 			"css": this.getCssFromEl()
 		});
-	},
-
-	"attachDropHandlers": function () {
-		this.$el.droppable({
-			"accept": ".element",
-			"scope": "form",
-			"drop": function (aEvent, aUi) {
-
-			}
-		});
+		this.attachDropHandler(this.acceptHandler);
 	}
 });
 
