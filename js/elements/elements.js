@@ -191,7 +191,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 				}
 			},
 			"style": {
-				"classes": "qtip-rounded",
+				"classes": "qtip-rounded edit-tooltip",
 				"tip": {
 					"corner": true
 				}
@@ -361,6 +361,13 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 		var groupName = "radioGroup" + aId;
 		this.setProperty("radioGroupName", groupName);
 		this.$viewElements.$rButton.prop("name", groupName);
+	},
+
+	"fetchResponseTree": function () {
+		return $.extend(true, {
+			"objectType": this.model.get("objectType"),
+			"value": this.$viewElements.$rButton.prop("checked")
+		}, this.model.get("properties"));
 	}
 });
 
@@ -379,6 +386,13 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 		this.questionId = Launch.editor.getNextAvailableId();
 		this.setProperty("questionId", this.questionId);
 	},
+
+	"fetchResponseTree": function () {
+		return $.extend(true, {
+			"objectType": this.model.get("objectType"),
+			"value": this.$viewElements.$rCheckbox.prop("checked")
+		}, this.model.get("properties"));
+	}
 });
 
 Launch.views.ButtonElementView = Launch.views.FormElementView.extend({
@@ -420,6 +434,13 @@ Launch.views.TextboxElementView = Launch.views.FormElementView.extend({
 	"setPlaceholder": function (aPlaceholder) {
 		this.setProperty("placeholder", aPlaceholder);
 		this.$viewElements.$rTextbox.prop("placeholder", aPlaceholder);
+	},
+
+	"fetchResponseTree": function () {
+		return $.extend(true, {
+			"objectType": this.model.get("objectType"),
+			"value": this.$viewElements.$rTextbox.val()
+		}, this.model.get("properties"));
 	}
 });
 

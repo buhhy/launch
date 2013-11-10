@@ -7,10 +7,20 @@ Launch.views.ElementCanvas = Launch.views.View.extend({
 		_.each(aViews, function (aElemView) {
 			this.attachNewElementView(aElemView);
 		}, this);
+	},
+
+	"fetchResponseTree": function () {
+		return _.map(this.childViews, function (aElemView) {
+			return aElemView.fetchResponseTree();
+		}, this);
 	}
 });
 
 Launch.views.Survey = Backbone.View.extend({
+	"events": {
+		"submit #elementCanvas": "submitSurvey"
+	},
+
 	"initialize": function () {
 		this.canvasView = new Launch.views.ElementCanvas({
 			"el": "#elementCanvas"
@@ -48,5 +58,10 @@ Launch.views.Survey = Backbone.View.extend({
 
 			return view;
 		}, this);
+	},
+
+	"submitSurvey": function (aEvent) {
+		aEvent.preventDefault();
+		console.log(this.canvasView.fetchResponseTree());
 	}
 });

@@ -36,7 +36,9 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.form,
 					Launch.globals.elementType.standalone
 				],
-				"elementMarkup": "<input class='button' type='button' data-widget='button' value='<%= label %>'>",
+				"elementMarkup": [
+					"<input class='button' type='submit' data-widget='button' value='<%= label %>'>"
+				].join(""),
 				"title": "Button",
 				"description": "A push button",
 				"defaultCss": {
