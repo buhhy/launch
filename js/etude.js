@@ -25,7 +25,7 @@ var Launch = {
 						Launch.globals.elementType.standalone,
 						Launch.globals.elementType.container
 					],
-					"elementMarkup": "<input type='text' class='button' value='Button'>",
+					"elementMarkup": "<h1>1</h1>|<h2>Ask a question?</h2>",
 					"defaultProperties": {
 						"width": "300",
 						"height": null,
@@ -70,7 +70,16 @@ var Launch = {
 					"elementType": [
 						Launch.globals.elementType.form
 					],
-					"elementMarkup": "<input type='radio' class='button' value='Button'>",
+					"elementMarkup": [
+						"<section>",
+						"<input type='radio' class='radio-button' value='value'>",
+						"<label>",
+						"<img class='radio-image'>",
+						"<h1></h1>",
+						"</label>",
+						"</section>"
+					].join(""),
+					"editableMarkup": "<p><input type='text' class='edit-textbox'>",
 					"title": "Radio Button",
 					"description": "An exclusive button set",
 					"defaultProperties": {
@@ -85,12 +94,17 @@ var Launch = {
 						Launch.globals.elementType.form,
 						Launch.globals.elementType.standalone
 					],
-					"elementMarkup": "<div class='toc'><textarea></textarea></div>",
+					"elementMarkup": [
+						"<div class='toc'>",
+						"<textarea></textarea>",
+						"<footer><input type='checkbox'><label></label></footer>",
+						"</div>"
+					].join(""),
 					"title": "Terms of Service",
 					"description": "A sample ToC to sign",
 					"defaultProperties": {
-						"width": 400,
-						"height": 400,
+						"width": 350,
+						"height": 300,
 					},
 					"icon": "http://icons.iconarchive.com/icons/artua/mac/256/Setting-icon.png"
 				})

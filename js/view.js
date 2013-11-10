@@ -15,10 +15,15 @@ Launch.views.View = Backbone.View.extend({
 		});
 	},
 
-	"attachDropHandler": function (aAccept) {
+	"acceptDragFn": function (aHelper) {
+		return true;
+	},
+
+	"attachDropHandler": function ($elem) {
 		var self = this;
-		self.$el.droppable({
-			"accept": $.proxy(aAccept, this),
+		$elem = $elem || self.$el;
+		$elem.droppable({
+			"accept": $.proxy(this.acceptDragFn, this),
 			"drop": function (aEvent, aUi) {
 				// get position relative to active canvas
 				var thisPos = self.$el.offset();

@@ -118,7 +118,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
-	"acceptHandler": function (aHelper) {
+	"acceptDragFn": function (aHelper) {
 		if (aHelper.hasClass("element")) {
 			var eType = aHelper.data("elementType");
 			if (eType.indexOf(Launch.globals.elementType.standalone) === -1 &&
