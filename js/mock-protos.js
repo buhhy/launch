@@ -138,9 +138,9 @@ Launch.getDefaultElementProtos = function () {
 				"defaultProperties": {
 					"title": "Double-click this text to change text."
 				},
-				"title": "Text",
-				"description": "A text string",
-				"icon": "images/question.png"
+				"title": "Heading",
+				"description": "A heading",
+				"icon": "images/text.png"
 			})
 		];
 	}
