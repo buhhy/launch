@@ -349,7 +349,7 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 	},
 
 	"setTitle": function (aTitle) {
-		this.setProperty("title", aTitle);
+		this.setProperty("optionTitle", aTitle);
 		this.$viewElements.$rTitle.html(aTitle);
 	},
 
