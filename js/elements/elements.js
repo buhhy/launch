@@ -35,8 +35,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 			this.setProperty("elementId", Launch.editor.getNextAvailableId());
 		}
 
-		this.buildElement();
 		this.preApplyModel();
+		this.buildElement();
 		this.applyModel();
 
 		if (this.editMode) {
@@ -235,7 +235,9 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.model.set("children", collection);
 
 		return this.model;
-	}
+	},
+
+	"fetchResponseTree": function () { }
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
@@ -278,6 +280,17 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 
 	"onNewElementAdded": function (aElementView) {
 		aElementView.setQuestionId(this.model.get("properties").elementId);
+	},
+
+	"fetchResponseTree": function () {
+		var props = this.model.get("properties");
+		var responses = _.map(this.childViews, function (aElemView) {
+			return aElemView.fetchResponseTree();
+		}, this);
+
+		return $.extend(true, {
+			"answers": responses
+		}, props);
 	}
 });
 
@@ -320,11 +333,6 @@ Launch.views.RadioButtonElementView = Launch.views.FormElementView.extend({
 		var props = this.model.get("properties");
 
 		$view.$rButton.prop("checked", props.radioChecked);
-		$view.$rButton.prop("id", props.inputId);
-		$view.$rButton.prop("name", props.radioGroupName);
-		$view.$rLabel.prop("for", props.inputId);
-		$view.$rImage.prop("src", props.iconUrl);
-		$view.$rTitle.html(props.optionTitle);
 
 		self.$viewElements = $view;
 	},
@@ -360,18 +368,11 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
 		Launch.views.ElementView.prototype.applyModel.call(this, aModel);
 		var self = this;
-		var $view = {
+		self.$viewElements = {
 			"$rText": self.$el.find("[data-widget='tosText']"),
 			"$rCheckbox": self.$el.find("[data-widget='agreeCheckbox']"),
 			"$rPrompt": self.$el.find("[data-widget='agreePrompt']")
 		};
-		var props = this.model.get("properties");
-
-		$view.$rText.html(props.tosText);
-		$view.$rCheckbox.prop("id", props.inputId);
-		$view.$rPrompt.prop("for", props.inputId);
-		$view.$rPrompt.html(props.agreePrompt);
-		self.$viewElements = $view;
 	},
 
 	"initializeEditable": function (aModel) {

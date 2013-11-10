@@ -54,7 +54,11 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.form
 				],
-				"elementMarkup": "<input class='textbox' type='text' data-widget='textbox' placeholder='<%= placeholder %>'>",
+				"elementMarkup": [
+					"<input id='<%= inputId %>' name='<%= inputId %>'",
+							"class='textbox' type='text' data-widget='textbox'",
+							"placeholder='<%= placeholder %>'>"
+				].join(""),
 				"title": "Textbox",
 				"description": "An input text box",
 				"defaultCss": {
@@ -74,10 +78,11 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<section class='center'>",
-						"<input class='radio' type='radio' data-widget='radioButton' value='value'>",
-						"<label data-widget='radioLabel'>",
-							"<img class='img-option' data-widget='radioImage'>",
-							"<span='text' data-widget='radioTitle'></span>",
+						"<input id='<%= inputId %>' name='<%= radioGroupName %>'",
+								"class='radio' type='radio' data-widget='radioButton' value='value'>",
+						"<label for='<%= inputId %>' data-widget='radioLabel'>",
+							"<img src='<%= iconUrl %>' class='img-option' data-widget='radioImage'>",
+							"<span='text' data-widget='radioTitle'><%= optionTitle %></span>",
 						"</label>",
 					"</section>"
 				].join(""),
@@ -104,10 +109,10 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<div class='tos-container' data-widget='tosContainer'>",
-						"<article class='frame' data-widget='tosText'></article>",
+						"<article class='frame' data-widget='tosText'><%= tosText %></article>",
 						"<footer data-widget='agreement'>",
-							"<input class='checkbox' data-widget='agreeCheckbox' type='checkbox'>",
-							"<label class='text' data-widget='agreePrompt'></label>",
+							"<input id='<%= inputId %>' class='checkbox' data-widget='agreeCheckbox' type='checkbox'>",
+							"<label for='<%= inputId %>' class='text' data-widget='agreePrompt'><%= agreePrompt %></label>",
 						"</footer>",
 					"</div>"
 				].join(""),
