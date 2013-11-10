@@ -100,15 +100,15 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<div data-widget='tosContainer'>",
-						"<article data-widget='tosText'></article>",
+						"<article class='frame' data-widget='tosText'></article>",
 						"<footer data-widget='agreement'>",
-							"<input data-widget='agreeCheckbox' type='checkbox'>",
-							"<label data-widget='agreePrompt'></label>",
+							"<input class='checkbox' data-widget='agreeCheckbox' type='checkbox'>",
+							"<label class='text' data-widget='agreePrompt'></label>",
 						"</footer>",
 					"</div>"
 				].join(""),
 				"title": "Terms of Service",
-				"description": "A sample ToC to sign",
+				"description": "A sample ToS to sign",
 				"defaultCss": {
 					"width": 350,
 					"height": 300,
@@ -130,13 +130,13 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.standalone
 				],
-				"elementMarkup": "<h1 data-widget='title'><%= title %></h1>",
+				"elementMarkup": "<h1 class='heading' data-widget='title'><%= title %></h1>",
 				"defaultCss": {
-					"width": "500",
-					"height": "100"
+					"width": "550",
+					"height": "170",
 				},
 				"defaultProperties": {
-					"title": "Double-click to change text."
+					"title": "Double-click to edit."
 				},
 				"title": "Heading",
 				"description": "A heading",
