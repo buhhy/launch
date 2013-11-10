@@ -19,7 +19,7 @@ Launch.getDefaultElementProtos = function () {
 				},
 				"defaultProperties": {
 					"number": 1,
-					"title": "Double-click this text to enter your question."
+					"title": "Double-click to enter your question."
 				},
 				"title": "Question",
 				"description": "A question string",
@@ -132,11 +132,11 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": "<h1 data-widget='title'><%= title %></h1>",
 				"defaultCss": {
-					"width": "300",
-					"height": null,
+					"width": "500",
+					"height": "100"
 				},
 				"defaultProperties": {
-					"title": "Double-click this text to change text."
+					"title": "Double-click to change text."
 				},
 				"title": "Heading",
 				"description": "A heading",

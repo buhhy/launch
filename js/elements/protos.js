@@ -13,6 +13,8 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"scope": undefined,
 
 	"initialize": function (aOptions) {
+		Launch.views.View.prototype.initialize.call(this, aOptions);
+
 		this.canvasView = aOptions.canvasView;
 		this.targetParent = this.canvasView.$el;
 		this.scope = this.model.get("scope");

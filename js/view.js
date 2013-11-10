@@ -1,13 +1,30 @@
 Launch.views.View = Backbone.View.extend({
-	"elements": [],
+	"childElements": undefined,
+	"parentView": undefined,
 
-	"attachTo": function ($aEl) {
-		$aEl.append(this.$el);
+	"initialize": function (aOptions) {
+		this.childElements = [];
 	},
 
-	"detach": function () {
+	/**
+	 * Detaches a view from its parent, and calls the parent's detach callback
+	 */
+	"detachFromView": function (aDestroy) {
+		if (this.parentView)
+			this.parentView.onChildDetached(this);
+		if (aDestroy)
+			this.onDestroy();
 		this.$el.detach();
 	},
+
+	/**
+	 * Attaches to a Backbone View
+	 */
+	"attachToView": function (aElemView) {
+		this.parentView = aElemView;
+		aElemView.$el.append(this.$el);
+	},
+
 
 	"acceptDragFn": function (aHelper) {
 		return true;
@@ -28,8 +45,9 @@ Launch.views.View = Backbone.View.extend({
 
 				var elemView = aUi.helper.data("model");
 				elemView.reposition(newX, newY);
-				elemView.detach();
-				self.attachNewElementView(elemView);
+
+				if (self !== elemView.parentView)
+					self.attachNewElementView(elemView);
 
 				// clear in case of memory leak?
 				aUi.helper.data("model", undefined);
@@ -38,10 +56,23 @@ Launch.views.View = Backbone.View.extend({
 	},
 
 	"attachNewElementView": function (aElementView) {
-		this.elements.push(aElementView);
-		aElementView.attachTo(this.$el);
+		aElementView.detachFromView();
+		this.childElements.push(aElementView);
+		aElementView.attachToView(this);
 		this.onNewElementAdded(aElementView);
 	},
 
-	"onNewElementAdded": function (aElementView) { }
+	"onDestroy": function () { },
+
+	"onNewElementAdded": function (aElementView) { },
+
+	"onChildDetached": function (aChildView) {
+		for (var i = 0; i < this.childElements.length; i++) {
+			if (this.childElements[i] === aChildView) {
+				this.childElements.splice(i, 1);
+				console.log(i);
+				break;
+			}
+		}
+	}
 });
