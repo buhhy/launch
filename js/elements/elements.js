@@ -274,7 +274,7 @@ Launch.views.TermsOfUseElementView = Launch.views.FormElementView.extend({
 	"applyModel": function (aModel) {
 		var self = this;
 		var $view = {
-			"$rButton": self.$el.find(".radio-button"),
+			"$rButton": self.$el.find("[data-widget='tosText']"),
 			"$rImage": self.$el.find(".radio-image"),
 			"$rTitle": self.$el.find(".radio-title")
 		};

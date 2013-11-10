@@ -9,9 +9,9 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.container
 				],
 				"elementMarkup": [
-					"<h1 class='question-number'>1</h1>",
-					"<span class='divider'>|</span>",
-					"<h2 class='question-title'>Ask a question?</h2>"
+					"<h1 data-widget='questionNumber'>1</h1>",
+					"<span data-widget='divider'>|</span>",
+					"<h2 data-widget='questionTitle'>Ask a question?</h2>"
 				].join(""),
 				"defaultCss": {
 					"width": "300",
@@ -27,7 +27,7 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.form
 				],
-				"elementMarkup": "<input type='button' class='button' value='Button'>",
+				"elementMarkup": "<input type='button' data-widget='button' value='Button'>",
 				"title": "Button",
 				"description": "A push button",
 				"defaultCss": {
@@ -42,7 +42,7 @@ Launch.getDefaultElementProtos = function () {
 				"elementType": [
 					Launch.globals.elementType.form
 				],
-				"elementMarkup": "<input type='text' class='textbox' value=''>",
+				"elementMarkup": "<input type='text' data-widget='textbox' value=''>",
 				"title": "Textbox",
 				"description": "An input text box",
 				"defaultCss": {
@@ -59,16 +59,16 @@ Launch.getDefaultElementProtos = function () {
 				],
 				"elementMarkup": [
 					"<section>",
-						"<input type='radio' class='radio-button' value='value'>",
-						"<label class='radio-label'>",
-							"<img class='radio-image'>",
-							"<h1 class='radio-title'></h1>",
+						"<input type='radio' data-widget='radioButton' value='value'>",
+						"<label data-widget='radioLabel'>",
+							"<img data-widget='radioImage'>",
+							"<h1 data-widget='radioTitle'></h1>",
 						"</label>",
 					"</section>"
 				].join(""),
 				"editableMarkup": [
 					"<label>Enter image URL:</label>",
-					"<input type='text' class='edit-textbox'>"
+					"<input type='text' data-widget='editTextbox'>"
 				].join(""),
 				"title": "Radio Button",
 				"description": "An exclusive button set",
@@ -92,11 +92,11 @@ Launch.getDefaultElementProtos = function () {
 					Launch.globals.elementType.standalone
 				],
 				"elementMarkup": [
-					"<div class='tos-container'>",
-						"<article class='tos-text'></article>",
-						"<footer class='tos-agreement'>",
-							"<input type='checkbox'>",
-							"<label class='tos-agreement-prompt'></label>",
+					"<div data-widget='tosContainer'>",
+						"<article data-widget='tosText'></article>",
+						"<footer data-widget='agreement'>",
+							"<input data-widget='agreeCheckbox' type='checkbox'>",
+							"<label data-widget='agreePrompt'></label>",
 						"</footer>",
 					"</div>"
 				].join(""),
