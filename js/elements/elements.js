@@ -23,6 +23,7 @@ Launch.views.ElementView = Launch.views.View.extend({
 			"css": $.extend(true, {}, aOptions.baseModel.get("defaultCss")),
 			"properties": $.extend(true, {}, aOptions.baseModel.get("defaultProperties")),
 		});
+
 		this.elementMarkup = aOptions.baseModel.get("elementMarkup");
 		this.elementType = aOptions.baseModel.get("elementType");
 		this.scope = aOptions.baseModel.get("scope");
@@ -53,19 +54,15 @@ Launch.views.ElementView = Launch.views.View.extend({
 
 	"initializeEditable": function () { },
 
-	"getCssFromEl": function () {
-		return {
-			"width": this.$el.css("width"),
-			"height": this.$el.css("height"),
-			"top": this.$el.css("top"),
-			"left": this.$el.css("left")
-		};
-	},
-
 	"buildElement": function () {
 		var templated = _.template(this.elementMarkup, this.model.get("properties"));
+
 		if (this.editMode) {
 			var $base = $(this.elementBoundsMarkup);
+
+			if (Launch.editor.getViewState() === Launch.editor.viewStates.preview)
+				$base.addClass("preview");
+
 			$base.html(templated);
 			this.setElement($base);
 		} else {

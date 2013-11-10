@@ -39,3 +39,38 @@ Launch.views.ElementPalette = Launch.views.View.extend({
 	}
 });
 
+Launch.views.Editor = Backbone.View.extend({
+	"events": {
+		"click #btnPreview": "togglePreview",
+		"click #btnSave": "save",
+		"click #btnDone": "done"
+	},
+
+	"initialize": function () {
+		this.canvasView = new Launch.views.ElementCanvas({
+			"el": "#elementCanvas"
+		});
+
+		this.paletteView = new Launch.views.ElementPalette({
+			"el": "#elementPalette",
+			"canvasView": this.canvasView
+		});
+	},
+
+	"togglePreview": function (aEvent) {
+		var $el = $(this);
+		var previewOn = !$el.prop("data-preview");
+
+		if (previewOn) {
+			$el.addClass("active");
+			$(".element").addClass("preview");
+			Launch.editor.setViewState(Launch.editor.viewStates.preview);
+		} else {
+			$el.removeClass("active");
+			$(".element").removeClass("preview");
+			Launch.editor.setViewState(Launch.editor.viewStates.edit);
+		}
+
+		$el.prop("data-preview", previewOn);
+	}
+});

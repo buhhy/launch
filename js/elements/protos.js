@@ -38,7 +38,6 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	"spawnChild": function () {
 		return new this.viewClass({
 			"baseModel": this.model,
-			"parent": $("body"),
 			"editMode": true
 		})
 	},

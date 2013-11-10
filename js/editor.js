@@ -1,11 +1,6 @@
 $(function () {
-	var canvasView = new Launch.views.ElementCanvas({
-		"el": "#elementCanvas"
-	});
-
-	var paletteView = new Launch.views.ElementPalette({
-		"el": "#elementPalette",
-		"canvasView": canvasView
+	new Launch.views.Editor({
+		"el": document.body
 	});
 });
 
@@ -14,7 +9,21 @@ Launch.editor = {
 		"<label><%= label %></label>",
 		"<input type='text' data-widget='editTextbox'>"
 	].join(""),
+
+	"viewStates": {
+		"edit": 0,
+		"preview": 1
+	},
+
+	"viewState": 0,
 	"currentId": -1,
+
+	"setViewState": function (aNewState) {
+		this.viewState = aNewState;
+	},
+	"getViewState": function () {
+		return this.viewState;
+	},
 	"getNextAvailableId": function () {
 		this.currentId ++;
 		return this.currentId;
