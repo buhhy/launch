@@ -25,11 +25,13 @@ Launch.views.ElementView = Launch.views.View.extend({
 		this.buildElement();
 
 		if (this.editMode) {
-			this.overrideDefaultClickHandlers();
+			this.initializeEditable();
 			this.attachDragHandlers();
 			this.attachResizeHandlers();
 		}
 	},
+
+	"initializeEditable": function () { },
 
 	"getCssFromEl": function () {
 		return {
@@ -79,10 +81,11 @@ Launch.views.ElementView = Launch.views.View.extend({
 	"attachDragHandlers": function () {
 		var self = this;
 		self.$el.draggable({
+			"delay": 100,
 			"opacity": 0.8,
 			"helper": "original",
 			"appendTo": this.parent,
-			"cancel": false,
+			"cancel": "input",
 			"start": function (aEvent, aUi) {
 				aUi.helper.data("model", self);
 				aUi.helper.data("elementType", self.elementType);
@@ -118,6 +121,8 @@ Launch.views.ElementView = Launch.views.View.extend({
 });
 
 Launch.views.QuestionElementView = Launch.views.ElementView.extend({
+	"$viewElements": {},
+
 	"acceptDragFn": function (aHelper) {
 		if (aHelper.hasClass("element")) {
 			var eType = aHelper.data("elementType");
@@ -136,6 +141,17 @@ Launch.views.QuestionElementView = Launch.views.ElementView.extend({
 			"css": this.getCssFromEl()
 		});
 		this.attachDropHandler(this.acceptHandler);
+	},
+
+	"initializeEditable": function () {
+		this.$viewElements.$qNumber = this.$el.find(".question-number");
+		this.$viewElements.$qTitle = this.$el.find(".question-title");
+
+		this.$viewElements.$qTitle.editable({
+			"action": "dblclick"
+		}, function (newValue) {
+
+		});
 	}
 });
 

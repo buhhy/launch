@@ -6,6 +6,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 		"</li>"
 	].join(""),
 
+	"viewClass": Launch.views.FormElementView,
 	"canvasView": undefined,
 	"model": undefined,
 	"targetParent": undefined,
@@ -20,14 +21,20 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 	},
 
 	"buildElement": function () {
-		this.setElement(_.template(this.elementMarkUp, {
-			"title": this.model.get("title"),
-			"icon": this.model.get("icon")
-		}));
+		this.setElement(
+			$(_.template(this.elementMarkUp, {
+				"title": this.model.get("title"),
+				"icon": this.model.get("icon")
+			}))
+		);
+	},
+
+	"processViewObject": function ($aEl) {
+		return $aEl;
 	},
 
 	"spawnChild": function () {
-		return new Launch.views.FormElementView({
+		return new this.viewClass({
 			"baseModel": this.model,
 			"parent": $("body"),
 			"editMode": true
@@ -47,14 +54,7 @@ Launch.views.ElementProtoView = Launch.views.View.extend({
 
 Launch.views.QuestionProtoView = Launch.views.ElementProtoView.extend({
 	"model": Launch.getDefaultElementProtos()[0],
-
-	"spawnChild": function () {
-		return new Launch.views.QuestionElementView({
-			"baseModel": this.model,
-			"parent": $("body"),
-			"editMode": true
-		})
-	}
+	"viewClass": Launch.views.QuestionElementView
 });
 
 Launch.views.ButtonProtoView = Launch.views.ElementProtoView.extend({

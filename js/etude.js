@@ -25,7 +25,11 @@ var Launch = {
 						Launch.globals.elementType.standalone,
 						Launch.globals.elementType.container
 					],
-					"elementMarkup": "<h1>1</h1>|<h2>Ask a question?</h2>",
+					"elementMarkup": [
+						"<h1 class='question-number'>1</h1>",
+						"<span class='divider'>|</span>",
+						"<h2 class='question-title'>Ask a question?</h2>"
+					].join(""),
 					"defaultProperties": {
 						"width": "300",
 						"height": null,
@@ -79,7 +83,10 @@ var Launch = {
 						"</label>",
 						"</section>"
 					].join(""),
-					"editableMarkup": "<p><input type='text' class='edit-textbox'>",
+					"editableMarkup": [
+						"<label>Enter image URL:</label>",
+						"<input type='text' class='edit-textbox'>"
+					].join(""),
 					"title": "Radio Button",
 					"description": "An exclusive button set",
 					"defaultProperties": {
@@ -96,7 +103,7 @@ var Launch = {
 					],
 					"elementMarkup": [
 						"<div class='toc'>",
-						"<textarea></textarea>",
+						"<article></article>",
 						"<footer><input type='checkbox'><label></label></footer>",
 						"</div>"
 					].join(""),

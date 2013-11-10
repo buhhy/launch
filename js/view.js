@@ -9,12 +9,6 @@ Launch.views.View = Backbone.View.extend({
 		this.$el.detach();
 	},
 
-	"overrideDefaultClickHandlers": function () {
-		this.$el.find("input").click(function (aEvent) {
-			aEvent.preventDefault();
-		});
-	},
-
 	"acceptDragFn": function (aHelper) {
 		return true;
 	},
